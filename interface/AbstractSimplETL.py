@@ -1,12 +1,13 @@
 
 from typing import Any, List
-
+import logging
 
 class AbstractSimplETL:
     def __init__(self, project_name, environment, endpoint) -> None:
         self.project_name = project_name
         self.environment = environment
         self.endpoint = endpoint
+        self.logger = logging.basicConfig(level=logging.DEBUG)
         
     
     def extract(self):

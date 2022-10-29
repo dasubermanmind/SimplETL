@@ -1,4 +1,7 @@
 
+import logging
+
+
 class Utilities:
     
     @staticmethod
@@ -9,3 +12,13 @@ class Utilities:
     def getTransform(transform_type):
         pass
 
+    @staticmethod
+    def create_custom_logger(logger, filepath):
+        logger = logging.getLogger(__name__)
+        
+        stream_handler = logging.StreamHandler()
+        file_handler = logging.FileHandler(filepath)
+        stream_handler.setLevel(logging.WARNING)
+        file_handler.setLevel(logging.ERROR)
+        
+        # create custom formatters
