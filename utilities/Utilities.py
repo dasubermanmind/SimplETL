@@ -13,7 +13,7 @@ class Utilities:
         pass
 
     @staticmethod
-    def create_custom_logger(logger, filepath):
+    def create_custom_logger(logger, filepath)-> logging.Logger:
         logger = logging.getLogger(__name__)
         
         stream_handler = logging.StreamHandler()
@@ -22,3 +22,6 @@ class Utilities:
         file_handler.setLevel(logging.ERROR)
         
         # create custom formatters
+        
+        
+        return logger

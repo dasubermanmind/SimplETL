@@ -10,15 +10,15 @@ class AbstractSimplETL:
         self.logger = logging.basicConfig(level=logging.DEBUG)
         
     
-    def extract(self):
+    def extract(self)-> List[Any]:
         pass
     
     
-    def transform(self, data: List[Any]):
+    def transform(self, data: List[Any])-> List[Any]:
         pass
     
     
-    def load(self,data: List[Any]):
+    def load(self,data: List[Any])-> None:
         pass
     
 

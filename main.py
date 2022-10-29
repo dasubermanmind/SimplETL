@@ -1,4 +1,8 @@
+import typer
+
+def main():
+    print('SimplETL starting to work')
 
 
 if __name__ == 'main':
-    print('SimplETL has started--->>')
+    typer.run(main)
