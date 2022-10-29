@@ -4,7 +4,7 @@ from rich.console import Console
 from rich.table import Table
 
 from interface.AbstractSimplETL import AbstractSimplETL
-from settings.general import PROJECT_NAME
+from settings.general import LOCAL_ENV, PROJECT_NAME
 from utilities.Utilities import Utilities
 
 app = typer.Typer()
@@ -26,7 +26,7 @@ def intro():
 @app.command()
 def etl_example():
     print('Starting an ingest cyle....please stand by')
-    etl = AbstractSimplETL(PROJECT_NAME, 'local', None)
+    etl = AbstractSimplETL(PROJECT_NAME, LOCAL_ENV, None)
     # download the data into a csv
     done = Utilities.download_data_set()
     
