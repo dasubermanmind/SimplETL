@@ -13,12 +13,12 @@ console = Console()
 @app.command()
 def intro():
     table = Table('SimplETL a quick and dirty way to get your data transform and loaded to your database of choice')
-    table.add_row("""\ _________.__               .__  ______________________.____     
- /   _____/|__| _____ ______ |  | \_   _____/\__    ___/|    |    
- \_____  \ |  |/     \\____ \|  |  |    __)_   |    |   |    |    
- /        \|  |  Y Y  \  |_> >  |__|        \  |    |   |    |___ 
-/_______  /|__|__|_|  /   __/|____/_______  /  |____|   |_______ \
-        \/          \/|__|                \/                    \/
+    table.add_row("""
+                   ____  _  _      ____  _     _____ _____  _    
+                  / ___\/ \/ \__/|/  __\/ \   /  __//__ __\/ \   
+                  |    \| || |\/|||  \/|| |   |  \    / \  | |   
+                  \___ || || |  |||  __/| |_/\|  /_   | |  | |_/\
+                   \____/\_/\_/  \|\_/   \____/\____\  \_/  \____/
                     """)
     table.add_row('In order to start the ETL process first identify the data source. Please visit the readme for kaggle approved datasets')    
     console.print(table)
