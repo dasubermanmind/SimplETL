@@ -25,3 +25,7 @@ class Utilities:
         
         
         return logger
+    
+    @staticmethod
+    def download_data_set():
+        pass
