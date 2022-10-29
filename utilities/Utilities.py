@@ -1,6 +1,6 @@
 
 import logging
-
+import requests
 
 class Utilities:
     
@@ -27,5 +27,10 @@ class Utilities:
         return logger
     
     @staticmethod
-    def download_data_set():
-        pass
+    def download_data_set(url: str)-> bool:
+        r = requests.get(url)
+        if r.status_code != 200:
+            return False
+        
+        return True
+        

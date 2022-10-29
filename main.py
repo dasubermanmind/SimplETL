@@ -3,7 +3,7 @@ from rich import print
 from rich.console import Console
 from rich.table import Table
 
-from interface.AbstractSimplETL import AbstractSimplETL
+from interface.SimplETL import SimplETL
 from settings.general import LOCAL_ENV, PROJECT_NAME
 from utilities.Utilities import Utilities
 
@@ -25,15 +25,19 @@ def intro():
 
 @app.command()
 def etl_example():
-    print('Starting an ingest cyle....please stand by')
-    etl = AbstractSimplETL(PROJECT_NAME, LOCAL_ENV, None)
+    covid_url = ''
+    console.print('Starting an ingest cyle....please stand by')
+    etl = SimplETL(PROJECT_NAME, LOCAL_ENV, None)
     # download the data into a csv
-    done = Utilities.download_data_set()
+    console.print('Retreiving covid data sets')
+    done = Utilities.download_data_set(covid_url)
     
     if not done:
         console.print('Failed to download Exiting...')
         raise typer.Exit()
     etl._start()
+    # finished
+    console.print('All finished')
     
     
 
