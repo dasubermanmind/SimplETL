@@ -17,7 +17,7 @@ class SimplETL:
     data_to_transform = []
     data_to_load = []
     
-    def _start(self)->None:
+    def _start(self)->Dict[str,Any]:
         """
             The main entry point of the ETL. Within this phase we first setup
             all dependancies, authentication & any misc tasks we need to do before
@@ -28,7 +28,7 @@ class SimplETL:
         #api = KaggleApi()
         #api.authenticate()
         print('Starting Preprocess Phase')
-        self.extract()
+        return self.extract()
         
             
     # TODO: Need to investigate on whether or not 
@@ -63,7 +63,7 @@ class SimplETL:
         
     
     
-    def load(self)-> None:
+    def load(self)-> Dict[str,Any]:
         if not self.data_to_load:
             self.logger.info('Failed to Transform')
     
