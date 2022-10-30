@@ -35,7 +35,13 @@ def etl_example():
     if not done:
         console.print('Failed to download Exiting...')
         raise typer.Exit()
-    etl._start()
+    
+    while True:
+        ingest = etl._start()
+        if not ingest:
+            break
+        
+        
     # finished
     console.print('All finished')
     
