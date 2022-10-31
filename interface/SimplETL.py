@@ -1,12 +1,13 @@
 
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Optional
 import logging
-
-from pandas import read_csv
+from rich.console import Console
 import pandas as pd
 
 from settings.general import COVID_DIR
-#from kaggle.api.kaggle_api_extended import KaggleAPI
+from utilities.Utilities import Utilities
+
+console = Console()
 
 class SimplETL:
     def __init__(self, project_name, environment, endpoint) -> None:
@@ -27,7 +28,7 @@ class SimplETL:
             
             Returns None
         """
-        print('Starting Preprocess Phase')
+        console.print('Starting Preprocess Phase')
         while True:
             try:
                 # extract
@@ -46,7 +47,8 @@ class SimplETL:
     def extract(self, data: Optional[Any])-> Any:
         if data:
             # use the data structure
-            print('Inside data')
+            console.print('Inside data')
+            Utilities.write_to_csv(data, 'covid.csv')
             return data
         
         else:

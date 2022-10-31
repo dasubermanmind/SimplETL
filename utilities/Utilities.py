@@ -1,6 +1,7 @@
 
 import logging
 import requests
+import pandas as pd
 
 class Utilities:
     
@@ -33,4 +34,10 @@ class Utilities:
             return {}
         
         return r.json()
+    
+    
+    @staticmethod
+    def write_to_csv(data, file_name: str)->None:
+        df = pd.DataFrame(dict([ (k,pd.Series(v)) for k,v in data.items() ]))
+        return df.to_csv(file_name)
         
