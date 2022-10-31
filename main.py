@@ -36,10 +36,8 @@ def etl_example():
         console.print('Failed to download Exiting...')
         raise typer.Exit()
     
-    while True:
-        ingest = etl._start()
-        if not ingest:
-            break
+    etl._start()
+   
         
         
     # finished

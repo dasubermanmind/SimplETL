@@ -28,7 +28,19 @@ class SimplETL:
         #api = KaggleApi()
         #api.authenticate()
         print('Starting Preprocess Phase')
-        return self.extract()
+        while True:
+            try:
+                # extract
+                self.extract()
+                # transform
+                self.transform(self.data_to_transform)
+                # load
+                self.load(self.data_to_load)
+                if len(self.data_to_load) <= 0:
+                    break
+            except StopIteration:
+                break
+        
         
             
     # TODO: Need to investigate on whether or not 
@@ -44,7 +56,7 @@ class SimplETL:
         return self.data_to_transform
     
     
-    def transform(self)-> Dict[str,Any]:
+    def transform(self, data)-> Dict[str,Any]:
         if len(self.data_to_transform) <=0:
             self.logger.info('Failed to extract properly')
            
@@ -63,7 +75,7 @@ class SimplETL:
         
     
     
-    def load(self)-> Dict[str,Any]:
+    def load(self, data)-> Dict[str,Any]:
         if not self.data_to_load:
             self.logger.info('Failed to Transform')
     
