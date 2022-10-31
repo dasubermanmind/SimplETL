@@ -3,4 +3,3 @@ pandas
 numpy
 rich
 requests
-kaggle

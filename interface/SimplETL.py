@@ -1,9 +1,11 @@
 
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 import logging
 
 from pandas import read_csv
 import pandas as pd
+
+from settings.general import COVID_DIR
 #from kaggle.api.kaggle_api_extended import KaggleAPI
 
 class SimplETL:
@@ -17,7 +19,7 @@ class SimplETL:
     data_to_transform = []
     data_to_load = []
     
-    def _start(self)->Dict[str,Any]:
+    def _start(self, data)->None:
         """
             The main entry point of the ETL. Within this phase we first setup
             all dependancies, authentication & any misc tasks we need to do before
@@ -25,13 +27,11 @@ class SimplETL:
             
             Returns None
         """
-        #api = KaggleApi()
-        #api.authenticate()
         print('Starting Preprocess Phase')
         while True:
             try:
                 # extract
-                self.extract()
+                self.extract(data)
                 # transform
                 self.transform(self.data_to_transform)
                 # load
@@ -41,22 +41,25 @@ class SimplETL:
             except StopIteration:
                 break
         
-        
-            
     # TODO: Need to investigate on whether or not 
     # I should always return a df
-    def extract(self)-> List[Any]:
-        #kaggle datasets download -d reikagileletsoalo/covid-analysis
-        columns = ['covid', 'infection_rate']
-        # setup all the files in data folder
-        # df = pd.DataFrame()
-        # TODO: Research other operations I can do with read_csv
-        df = pd.read_csv('data/covid/*.csv', header=columns)
-        self.data_to_transform.append(df)
-        return self.data_to_transform
+    def extract(self, data: Optional[Any])-> Any:
+        if data:
+            # use the data structure
+            print('Inside data')
+            return data
+        
+        else:
+            columns = ['covid', 'infection_rate']
+            # setup all the files in data folder
+            # df = pd.DataFrame()
+            # TODO: Research other operations I can do with read_csv
+            df = pd.read_csv(COVID_DIR, header=columns)
+            self.data_to_transform.append(df)
+            return self.data_to_transform
     
     
-    def transform(self, data)-> Dict[str,Any]:
+    def transform(self, data)-> Any:
         if len(self.data_to_transform) <=0:
             self.logger.info('Failed to extract properly')
            

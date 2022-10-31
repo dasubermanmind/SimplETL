@@ -5,6 +5,8 @@ from rich.table import Table
 
 from interface.SimplETL import SimplETL
 from settings.general import LOCAL_ENV, PROJECT_NAME
+from covid19dh import covid19
+
 from utilities.Utilities import Utilities
 
 app = typer.Typer()
@@ -25,25 +27,19 @@ def intro():
 
 @app.command()
 def etl_example():
-    covid_url = ''
     console.print('Starting an ingest cyle....please stand by')
     etl = SimplETL(PROJECT_NAME, LOCAL_ENV, None)
-    # download the data into a csv
     console.print('Retreiving covid data sets')
-    done = Utilities.download_data_set(covid_url)
+    covid_url = 'https://coronavirus.data.gov.uk/api/v2/openapi.json'
+    data = Utilities.download_data_set(covid_url)
     
-    if not done:
+    if not data:
         console.print('Failed to download Exiting...')
         raise typer.Exit()
     
-    etl._start()
-   
-        
-        
+    etl._start(data)
     # finished
     console.print('All finished')
     
-    
-
 if __name__ == '__main__':
     app()

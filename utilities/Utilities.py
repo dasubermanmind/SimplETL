@@ -30,7 +30,7 @@ class Utilities:
     def download_data_set(url: str)-> bool:
         r = requests.get(url)
         if r.status_code != 200:
-            return False
+            return {}
         
-        return True
+        return r.json()
         
