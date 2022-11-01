@@ -4,7 +4,7 @@ from rich.console import Console
 from rich.table import Table
 
 from interface.SimplETL import SimplETL
-from settings.general import LOCAL_ENV, PROJECT_NAME
+from settings.general import COVID_DIR, LOCAL_ENV, PROJECT_NAME,COVID_NAME
 from covid19dh import covid19
 
 from utilities.Utilities import Utilities
@@ -30,14 +30,9 @@ def etl_example():
     console.print('Starting an ingest cyle....please stand by')
     etl = SimplETL(PROJECT_NAME, LOCAL_ENV, None)
     console.print('Retreiving covid data sets')
-    covid_url = 'https://coronavirus.data.gov.uk/api/v2/openapi.json'
-    data = Utilities.download_data_set(covid_url)
     
-    if not data:
-        console.print('Failed to download Exiting...')
-        raise typer.Exit()
-    
-    etl._start(data)
+    Utilities.extract_from_csv(COVID_DIR + 'owid-covid-data.csv.zip')
+    # etl._start()
     # finished
     console.print('All finished')
     

@@ -1,7 +1,10 @@
 
 import logging
+import os
+from pathlib import Path
 import requests
 import pandas as pd
+import zipfile
 
 class Utilities:
     
@@ -40,4 +43,19 @@ class Utilities:
     def write_to_csv(data, file_name: str)->None:
         df = pd.DataFrame(dict([ (k,pd.Series(v)) for k,v in data.items() ]))
         return df.to_csv(file_name)
+    
+    
+    @staticmethod 
+    def extract_from_csv(file_name)-> None:
+        try:
+            if not os.path.exists(file_name):
+                os.makedirs(file_name)
+                
+            with zipfile.ZipFile(file_name, 'r') as zipper:
+                zipper.extractall('data')
+        except BaseException as e:
+            print(f'oops files had issues { e }')
+            
+        return None
+        
         
