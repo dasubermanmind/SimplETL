@@ -28,12 +28,13 @@ def intro():
 
 @app.command()
 def etl_example():
+    maryland_data = 'data\covid\maryland-history.csv'
     console.print('Starting an ingest cyle....please stand by')
     etl = SimplETL(PROJECT_NAME, LOCAL_ENV, None)
     console.print('Retreiving covid data sets')
     
     Utilities.extract_from_csv(COVID_DIR + zip)
-    etl._start()
+    etl._start(maryland_data)
     # finished
     console.print('All finished')
     

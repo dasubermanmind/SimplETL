@@ -1,5 +1,5 @@
 
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, Union
 import logging
 from rich.console import Console
 import pandas as pd
@@ -39,39 +39,20 @@ class SimplETL:
         
     # TODO: Need to investigate on whether or not 
     # I should always return a df
-    def extract(self, data: Optional[Any])-> Any:
-        if data:
-            # use the data structure
-            console.print('Inside data')
-            Utilities.write_to_csv(data, 'covid.csv')
-            return data
+    def extract(self, data: Optional[Any])-> Union[Any, None]:
+        if not data:
+            return None
+        self.data_to_transform.append(data)
         
-        else:
-            columns = ['covid', 'infection_rate']
-            # setup all the files in data folder
-            # df = pd.DataFrame()
-            # TODO: Research other operations I can do with read_csv
-            df = pd.read_csv(COVID_DIR, header=columns)
-            self.data_to_transform.append(df)
-            return self.data_to_transform
+        return self.data_to_transform
     
     
-    def transform(self, data)-> Any:
+    def transform(self, data)-> Union[Any, None]:
+        
         if len(self.data_to_transform) <=0:
             self.logger.info('Failed to extract properly')
            
-        # def get_meta_data(self,self.data_to_transform):
-        #      pass
-        # determine which transform to apply
-        structure: Dict[str,Any] = {
-            'META_DATA': {},
-            'MAIN_DATA': {},
-            'CONDA_DATA': {},
-        }
-        #TODO: Apply intermediate transform and make sure user wants to 
-        # apply to the entire data set
-        
-        return structure
+        return None
         
 
     def execute(self,data):
@@ -79,11 +60,11 @@ class SimplETL:
         while True:
             try:
                 # extract
-                self.extract(data)
+                ret = self.extract(data)
                 # transform
-                self.transform(self.data_to_transform)
+                transfom_val = self.transform(ret)
                 # load
-                self.load(self.data_to_load)
+                self.load(transfom_val)
                 if len(self.data_to_load) <= 0:
                     break
             except StopIteration:
