@@ -20,7 +20,7 @@ class SimplETL:
     data_to_transform = []
     data_to_load = []
     
-    def _start(self, data)->None:
+    def _start(self, csv: ...)->None:
         """
             The main entry point of the ETL. Within this phase we first setup
             all dependancies, authentication & any misc tasks we need to do before
@@ -29,18 +29,13 @@ class SimplETL:
             Returns None
         """
         console.print('Starting Preprocess Phase')
-        while True:
-            try:
-                # extract
-                self.extract(data)
-                # transform
-                self.transform(self.data_to_transform)
-                # load
-                self.load(self.data_to_load)
-                if len(self.data_to_load) <= 0:
-                    break
-            except StopIteration:
-                break
+        # Do some preprocessing then call an driver that executes the 
+        # main ETL
+        data = pd.read_csv(csv)
+        
+        
+        self.execute(data)
+        
         
     # TODO: Need to investigate on whether or not 
     # I should always return a df
@@ -78,6 +73,21 @@ class SimplETL:
         
         return structure
         
+
+    def execute(self,data):
+        print('works')
+        while True:
+            try:
+                # extract
+                self.extract(data)
+                # transform
+                self.transform(self.data_to_transform)
+                # load
+                self.load(self.data_to_load)
+                if len(self.data_to_load) <= 0:
+                    break
+            except StopIteration:
+                break
     
     
     def load(self, data)-> Dict[str,Any]:

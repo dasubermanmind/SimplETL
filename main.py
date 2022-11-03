@@ -11,6 +11,7 @@ from utilities.Utilities import Utilities
 
 app = typer.Typer()
 console = Console()
+zip = 'owid-covid-data.csv.zip'
 
 @app.command()
 def intro():
@@ -31,8 +32,8 @@ def etl_example():
     etl = SimplETL(PROJECT_NAME, LOCAL_ENV, None)
     console.print('Retreiving covid data sets')
     
-    Utilities.extract_from_csv(COVID_DIR + 'owid-covid-data.csv.zip')
-    # etl._start()
+    Utilities.extract_from_csv(COVID_DIR + zip)
+    etl._start()
     # finished
     console.print('All finished')
     
