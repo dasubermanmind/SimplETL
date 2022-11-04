@@ -32,7 +32,8 @@ class SimplETL:
         # Do some preprocessing then call an driver that executes the 
         # main ETL
         data = pd.read_csv(csv)
-        
+        if not data:
+            return
         
         self.execute(data)
         
@@ -61,8 +62,10 @@ class SimplETL:
             try:
                 # extract
                 ret = self.extract(data)
+                print(ret)
                 # transform
                 transfom_val = self.transform(ret)
+                print(transfom_val)
                 # load
                 self.load(transfom_val)
                 if len(self.data_to_load) <= 0:
