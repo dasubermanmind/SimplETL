@@ -1,5 +1,5 @@
 
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 import logging
 from rich.console import Console
 import pandas as pd
@@ -29,50 +29,42 @@ class SimplETL:
             Returns None
         """
         console.print('Starting Preprocess Phase')
-        # Do some preprocessing then call an driver that executes the 
-        # main ETL
-        data = pd.read_csv(csv)
-        if not data:
-            return
+        data: pd.DataFrame = pd.read_csv(csv)
         
         self.execute(data)
         
-    def extract(self, data: Optional[Any])-> Union[pd.DataFrame, None]:
-        if not data:
-            self.logger.info('Extracting Failed please check again')
-            return None
+    def extract(self, data: Optional[Any])-> Union[pd.DataFrame, List[Any]]:
+        for _, row in data.iterrows():
+            self.data_to_transform.append(row)
         
-        datum = []
-        
-        for k in data:
-            item = {}
-            for key, val in k.items():
-                item[key] = val
-            datum.append(item)
-        
-        return datum
+        return self.data_to_transform
     
     
-    def transform(self, data)-> Union[Any, None]:
+    def transform(self, data: pd.DataFrame)-> Union[Any, None]:
         
-        if len(self.data_to_transform) <=0:
+        if len(data) <=0:
             self.logger.info('Failed to extract properly')
-           
+            
+        # First check for N/A
+        # data.fillna('No data was gathered')
+        # Units?
+        
         return data
         
 
-    def execute(self,data):
-        print('works')
+    def execute(self, data: pd.DataFrame):
+        print('Execution loop')
         while True:
             try:
                 # extract
-                ret = self.extract(data)
-                print(ret)
+                extraction_data = self.extract(data)
+                print(f'Extraction Data-->{extraction_data}')
                 # transform
-                transfom_val = self.transform(ret)
-                print(transfom_val)
+                transfom_data = self.transform(extraction_data)
+                print(f'Transofrmed Data{transfom_data}')
                 # load
-                self.load(transfom_val)
+                self.load(transfom_data)
+                
                 if len(self.data_to_load) <= 0:
                     break
             except StopIteration:
@@ -80,8 +72,10 @@ class SimplETL:
     
     
     def load(self, data)-> Dict[str,Any]:
-        if not self.data_to_load:
-            self.logger.info('Failed to Transform')
+        self.data_to_load.clear()
+        
+        # Load to a target endpoint....like postgres/neo4j
+        print('Loading!')
     
 
 
