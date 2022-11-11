@@ -37,15 +37,20 @@ class SimplETL:
         
         self.execute(data)
         
-        
-    # TODO: Need to investigate on whether or not 
-    # I should always return a df
-    def extract(self, data: Optional[Any])-> Union[Any, None]:
+    def extract(self, data: Optional[Any])-> Union[pd.DataFrame, None]:
         if not data:
+            self.logger.info('Extracting Failed please check again')
             return None
-        self.data_to_transform.append(data)
         
-        return self.data_to_transform
+        datum = []
+        
+        for k in data:
+            item = {}
+            for key, val in k.items():
+                item[key] = val
+            datum.append(item)
+        
+        return datum
     
     
     def transform(self, data)-> Union[Any, None]:
@@ -53,7 +58,7 @@ class SimplETL:
         if len(self.data_to_transform) <=0:
             self.logger.info('Failed to extract properly')
            
-        return None
+        return data
         
 
     def execute(self,data):
