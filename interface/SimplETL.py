@@ -29,7 +29,7 @@ class SimplETL:
             Returns None
         """
         console.print('Starting Preprocess Phase')
-        data: pd.DataFrame = pd.read_csv(csv)
+        data: pd.DataFrame = pd.read_csv(csv, na_values='No data gathered')
         
         self.execute(data)
         
@@ -44,16 +44,12 @@ class SimplETL:
         
         if len(data) <=0:
             self.logger.info('Failed to extract properly')
-            
-        # First check for N/A
-        # data.fillna('No data was gathered')
         # Units?
         
         return data
         
 
     def execute(self, data: pd.DataFrame):
-        print('Execution loop')
         while True:
             try:
                 # extract
@@ -61,7 +57,7 @@ class SimplETL:
                 print(f'Extraction Data-->{extraction_data}')
                 # transform
                 transfom_data = self.transform(extraction_data)
-                print(f'Transofrmed Data{transfom_data}')
+                print(f'Transofrmed Data-->{transfom_data}')
                 # load
                 self.load(transfom_data)
                 
