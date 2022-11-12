@@ -8,8 +8,8 @@ By dasubermanmind13
 
 
 
-## Get your data loaded quickly!
-This library allows you to spin up an ETL process very quickly so you can get to 
+## Get your data loaded
+This library allows you to spin up an ETL process without you having to think too much on it so you can get to 
 more important things like analyzing your data or fortnite 
 
 

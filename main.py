@@ -38,8 +38,8 @@ def etl_example(dataset: str):
         console.print('Retreiving covid data sets')
         
         etl._start(maryland_data)
-        # finished
-        console.print('All finished')
+        # If there were no errors then we display the goodbye message
+        console.print('All finished. Please check your local directory for results or the database that you stood up')
     else:
         console.print(f'No Dataset provided. Did you want to run the maryland covid dataset?')
         
@@ -57,7 +57,7 @@ def start(dataset: Optional[str] =None):
     console.print(f'You selected { selection }')
     
     if selection.lower() == '1':
-        csv = typer.confirm('Add your csv to the /data directory')
+        csv = typer.prompt('')
         # TODO: Setup csv extraction...maybe put it into the transform class?
         etl = CsvTransform(PROJECT_NAME, LOCAL_ENV, None)
         
