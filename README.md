@@ -10,13 +10,13 @@ By dasubermanmind13
 
 ## Get your data loaded quickly!
 This library allows you to spin up an ETL process very quickly so you can get to 
-more important things like analyzing your data! 
+more important things like analyzing your data or fortnite 
 
 
 ## Installation
 COMING SOON!
 
-Use the package manager to install...Coming Soon
+But will look something like this
 
 ```bash
 pip install simpletl
@@ -25,7 +25,7 @@ pip install simpletl
 ## Formats that work
 
 [X] - CSV
-[] - JSON
+[] - JSON -- In Progress Now!
 [] - XML (eww)
 [] - Excel -- This will be interesting
 
@@ -36,7 +36,7 @@ ETL process that after the loading has been done we then spawn a Jupyter Noteboo
 dataframe already loaded inside and maybe a couple operations loaded into the notebook. 
 
 ## Contributing
-Disclaimer: I am new to OSS so if you see something that I can improve please don't hesitate to reach out!
+Disclaimer: I am new to OSS so if you see something that I can improve please don't hesitate to reach out! Also, dont be an ass there's a difference between being helpful and giving good critical advice vs being a rude jackass. Shouldn't be hard to be nice. 
 
 ```
 eliot.ost@protonmail.com

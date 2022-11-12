@@ -9,7 +9,7 @@ from utilities.Utilities import Utilities
 
 console = Console()
 
-class SimplETL:
+class CsvTransform:
     def __init__(self, project_name, environment, endpoint) -> None:
         self.project_name = project_name
         self.environment = environment
@@ -20,7 +20,7 @@ class SimplETL:
     data_to_transform = []
     data_to_load = []
     
-    def _start(self, csv: ...)->None:
+    def _start(self, csv: Optional[Any])->None:
         """
             The main entry point of the ETL. Within this phase we first setup
             all dependancies, authentication & any misc tasks we need to do before
@@ -29,7 +29,11 @@ class SimplETL:
             Returns None
         """
         console.print('Starting Preprocess Phase')
-        data: pd.DataFrame = pd.read_csv(csv, na_values='No data gathered')
+        if csv:
+            data: pd.DataFrame = pd.read_csv(csv, na_values='No data gathered')
+        else:
+            # parse out the csv
+            pass
         
         self.execute(data)
         
@@ -50,6 +54,11 @@ class SimplETL:
         
 
     def execute(self, data: pd.DataFrame):
+        """
+            This is the execution loop for the extraction
+            
+            Return None
+        """
         while True:
             try:
                 # extract

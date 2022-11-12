@@ -1,9 +1,10 @@
+from typing import Optional
 import typer
 from rich import print
 from rich.console import Console
 from rich.table import Table
+from Transforms.CsvTransform import CsvTransform
 
-from interface.SimplETL import SimplETL
 from settings.general import COVID_DIR, LOCAL_ENV, PROJECT_NAME,COVID_NAME
 from covid19dh import covid19
 
@@ -33,22 +34,42 @@ def etl_example(dataset: str):
     if dataset.lower() == maryland:
         maryland_data = 'data\covid\maryland-history.csv'
         console.print(f'Starting an ingest cyle on the { dataset } data set....please stand by')
-        etl = SimplETL(PROJECT_NAME, LOCAL_ENV, None)
+        etl = CsvTransform(PROJECT_NAME, LOCAL_ENV, None)
         console.print('Retreiving covid data sets')
         
         etl._start(maryland_data)
         # finished
         console.print('All finished')
-    # else:
-    #     console.print(f'Starting an ingest cyle on the { covid } data set....please stand by')
-    #     Utilities.extract_from_csv(COVID_DIR + zip)
-    #     etl = SimplETL(PROJECT_NAME, LOCAL_ENV, None)
+    else:
+        console.print(f'No Dataset provided. Did you want to run the maryland covid dataset?')
+        
     
 @app.command()
-def start(dataset: str):
+def start(dataset: Optional[str] =None):
     table = Table('What type of data set are you wanting to ingest?')
-    table.add_row('CSV')
-    table.add_row('JSON File')
+    table.add_row('1. CSV')
+    table.add_row('2. JSON File')
+    table.add_row('3. XML')
+    table.add_row('4. Excel')
+    
+    console.print(table)
+    selection: str = typer.prompt('Select 1-4')
+    console.print(f'You selected { selection }')
+    
+    if selection.lower() == '1':
+        csv = typer.confirm('Add your csv to the /data directory')
+        # TODO: Setup csv extraction...maybe put it into the transform class?
+        etl = CsvTransform(PROJECT_NAME, LOCAL_ENV, None)
+        
+        
+    if selection.lower() == '2':
+        print('This hasnt been implemented yet')
+        
+    if selection.lower() == '3':
+        print('This hasnt been implemented yet')
+        
+    if selection.lower() == '4':
+        print('This hasnt been implemented yet')
     
         
 if __name__ == '__main__':
