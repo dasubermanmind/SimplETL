@@ -9,9 +9,11 @@ from covid19dh import covid19
 
 from utilities.Utilities import Utilities
 
+# Consts and appwide declarations
 app = typer.Typer()
 console = Console()
 zip = 'owid-covid-data.csv.zip'
+maryland = 'maryland'
 
 @app.command()
 def intro():
@@ -27,16 +29,27 @@ def intro():
     console.print(table)
 
 @app.command()
-def etl_example():
-    maryland_data = 'data\covid\maryland-history.csv'
-    console.print('Starting an ingest cyle....please stand by')
-    etl = SimplETL(PROJECT_NAME, LOCAL_ENV, None)
-    console.print('Retreiving covid data sets')
+def etl_example(dataset: str):
+    if dataset.lower() == maryland:
+        maryland_data = 'data\covid\maryland-history.csv'
+        console.print(f'Starting an ingest cyle on the { dataset } data set....please stand by')
+        etl = SimplETL(PROJECT_NAME, LOCAL_ENV, None)
+        console.print('Retreiving covid data sets')
+        
+        etl._start(maryland_data)
+        # finished
+        console.print('All finished')
+    # else:
+    #     console.print(f'Starting an ingest cyle on the { covid } data set....please stand by')
+    #     Utilities.extract_from_csv(COVID_DIR + zip)
+    #     etl = SimplETL(PROJECT_NAME, LOCAL_ENV, None)
     
-    # Utilities.extract_from_csv(COVID_DIR + zip)
-    etl._start(maryland_data)
-    # finished
-    console.print('All finished')
+@app.command()
+def start(dataset: str):
+    table = Table('What type of data set are you wanting to ingest?')
+    table.add_row('CSV')
+    table.add_row('JSON File')
     
+        
 if __name__ == '__main__':
     app()

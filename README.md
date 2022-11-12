@@ -14,6 +14,7 @@ more important things like analyzing your data!
 
 
 ## Installation
+COMING SOON!
 
 Use the package manager to install...Coming Soon
 
@@ -21,22 +22,24 @@ Use the package manager to install...Coming Soon
 pip install simpletl
 ```
 
-## Usage
+## Formats that work
 
-Coming Soon
+[X] - CSV
+[] - JSON
+[] - XML (eww)
+[] - Excel -- This will be interesting
 
-## Datasets that have been tested on and approved for the main pipeline
-1. TBD []
-1. TBD again []
-1. TBD...you guessed it []
-1. TBD...yup []
-1. You get the point []
+## Integrations with SIMPETL
+
+1. Jupyter Notebook Integration [] What does this mean? My idea is simple. Lets spawn an 
+ETL process that after the loading has been done we then spawn a Jupyter Notebook with the 
+dataframe already loaded inside and maybe a couple operations loaded into the notebook. 
 
 ## Contributing
 Disclaimer: I am new to OSS so if you see something that I can improve please don't hesitate to reach out!
 
 ```
-email here
+eliot.ost@protonmail.com
 ```
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
