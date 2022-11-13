@@ -13,6 +13,10 @@ This library allows you to spin up an ETL process without you having to think to
 more important things like analyzing your data or fortnite 
 
 
+## Where we load things?
+By default we setup a Postgres docker container and transform targetting this database
+
+
 ## Installation
 COMING SOON!
 
@@ -23,7 +27,6 @@ pip install simpletl
 ```
 
 ## Formats that work
-
 [X] - CSV
 [] - JSON -- In Progress Now!
 [] - XML (eww)

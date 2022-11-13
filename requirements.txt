@@ -3,3 +3,5 @@ pandas
 numpy
 rich
 requests
+psycopg2
+python-dotenv

@@ -3,11 +3,13 @@ from typing import Any, Dict, List, Optional, Union
 import logging
 from rich.console import Console
 import pandas as pd
+from db.postgres import LoadPostgres
 
 from settings.general import COVID_DIR
 from utilities.Utilities import Utilities
 
 console = Console()
+
 
 class CsvTransform:
     def __init__(self, project_name, environment, endpoint) -> None:
@@ -48,7 +50,9 @@ class CsvTransform:
         
         if len(data) <=0:
             self.logger.info('Failed to extract properly')
-        # Units?
+        
+        print(type(data))
+        # 
         
         return data
         
@@ -77,6 +81,11 @@ class CsvTransform:
     
     
     def load(self, data)-> Dict[str,Any]:
+        """
+
+        """
+        connector  = LoadPostgres()
+        print(f'Connector--> {connector}')
         self.data_to_load.clear()
         
         # Load to a target endpoint....like postgres/neo4j
