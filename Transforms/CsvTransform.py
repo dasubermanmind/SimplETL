@@ -52,7 +52,7 @@ class CsvTransform:
             self.logger.info('Failed to extract properly')
         
         #TODO: Need to do these programatically instead of manual parse
-        column_headers = ['Name', 'state', 'death', 'deathConfirmed', 'deathIncrease', 'deathProbably'
+        column_headers = ['state', 'death', 'deathConfirmed', 'deathIncrease', 'deathProbably'
                           'hospitalized', 'hospitalizedCumulative', 'hospitalizedCurrently','hospitalizedIncrease'
                           'inIcuCumulative', 'inIcuCurrently', 'negative', 'negativeIncrease', 'negativeTestsAntibody',
                           'negativeTestsPeopleAntibody', 'negativeTestsViral', 'onVentilatorCumulative', 'onVentilatorCurrently',
@@ -70,7 +70,7 @@ class CsvTransform:
         return df
         
 
-    def execute(self, data: pd.DataFrame):
+    def execute(self, data: pd.DataFrame)->None:
         """
             This is the execution loop for the extraction
             
@@ -93,7 +93,7 @@ class CsvTransform:
                 break
     
     
-    def load(self, data)-> Dict[str,Any]:
+    def load(self, data)-> None:
         """
 
         """

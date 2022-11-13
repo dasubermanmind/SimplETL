@@ -47,6 +47,12 @@ Abstract Class - [] This one and only!
 ETL process that after the loading has been done we then spawn a Jupyter Notebook with the 
 dataframe already loaded inside and maybe a couple operations loaded into the notebook. 
 
+1. Scheduler. Use case so lets say you want to run a specific ingest at 1523 every second monday of the month. Well you could set up a cron job to get this done. But this feels like it should be native to SimplETL.
+
+1. UI. One day Ill get to a React Frontend Dashboard. Just not today...
+
+1. Using Multiple databases (endpoints)
+
 ## Contributing
 Disclaimer: I am new to OSS so if you see something that I can improve please don't hesitate to reach out! Also, dont be an ass there's a difference between being helpful and giving good critical advice vs being a rude jackass. Shouldn't be hard to be nice. 
 
