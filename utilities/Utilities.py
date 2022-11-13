@@ -6,6 +6,8 @@ import requests
 import pandas as pd
 import zipfile
 
+from db.postgres import create_connection
+
 class Utilities:
     
     @staticmethod
@@ -57,5 +59,6 @@ class Utilities:
             print(f'oops files had issues { e }')
             
         return None
+    
         
         

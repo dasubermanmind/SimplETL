@@ -1,12 +1,9 @@
 
-from collections import defaultdict
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, List, Optional
 import logging
 from rich.console import Console
 import pandas as pd
-from db.postgres import LoadPostgres
-
-from settings.general import COVID_DIR
+from db.postgres import create_connection
 from utilities.Utilities import Utilities
 
 console = Console()
@@ -100,9 +97,8 @@ class CsvTransform:
         """
 
         """
-        #TODO: WIP HERE
-        # connector = LoadPostgres()
-        # print(f'Connector--> {connector}')
+        create_connection()
+    
         self.data_to_load.clear()
         
         # Load to a target endpoint....like postgres/neo4j
