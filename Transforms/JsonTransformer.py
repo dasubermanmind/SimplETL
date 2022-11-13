@@ -17,6 +17,25 @@ class JsonTransformer:
         pass
 
     def transform(self):
+        """
+            Json Tranform will have two parts 1. Normalize 2. Apply
+            Normalize will convert to a flat DS (a record) to be persisted to postgres
+            The big question is whether or not I want to extract the subsets of each
+            json structure 
+            
+            {
+                'main':{
+                    title: foo,
+                    bar: {
+                        nestedTitle: baz,
+                        data: {
+                            [...] <---This would be omitted unless if we performa deep traversal
+                        }
+                    }
+                }
+            } 
+        
+        """
         pass
     
     def load(self):

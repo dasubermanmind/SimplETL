@@ -46,15 +46,28 @@ class CsvTransform:
         return self.data_to_transform
     
     
-    def transform(self, data: pd.DataFrame)-> Union[Any, None]:
+    def transform(self, data: ...)-> ...:
         
         if len(data) <=0:
             self.logger.info('Failed to extract properly')
         
-        print(type(data))
-        # 
+        #TODO: Need to do these programatically instead of manual parse
+        column_headers = ['Name', 'state', 'death', 'deathConfirmed', 'deathIncrease', 'deathProbably'
+                          'hospitalized', 'hospitalizedCumulative', 'hospitalizedCurrently','hospitalizedIncrease'
+                          'inIcuCumulative', 'inIcuCurrently', 'negative', 'negativeIncrease', 'negativeTestsAntibody',
+                          'negativeTestsPeopleAntibody', 'negativeTestsViral', 'onVentilatorCumulative', 'onVentilatorCurrently',
+                          'positive', 'positiveCasesViral', 'positiveIncrease', 'positiveScore','positiveTestsAntibody',
+                          'positiveTestsAntigen', 'positiveTestsPeopleAntibody', 'positiveTestsPeopleAntigen', 'positiveTestsViral',
+                          'recovered', 'totalTestEncountersViral', 'totalTestEncountersViralIncrease', 'totalTestResults',
+                          'totalTestResultsIncrease', 'totalTestsAntibody', 'totalTestsAntigen','totalTestsPeopleAntibody'
+                          , 'totalTestsPeopleAntigen', 'totalTestsPeopleViral', 'totalTestsPeopleViralIncrease', 'totalTestsViral',
+                          'totalTestsViralIncrease']
         
-        return data
+        df = pd.DataFrame(data, columns=column_headers)
+        df.fillna(0)
+        print(df)
+         
+        return df
         
 
     def execute(self, data: pd.DataFrame):
@@ -84,12 +97,13 @@ class CsvTransform:
         """
 
         """
-        connector = LoadPostgres()
-        print(f'Connector--> {connector}')
+        #TODO: WIP HERE
+        # connector = LoadPostgres()
+        # print(f'Connector--> {connector}')
         self.data_to_load.clear()
         
         # Load to a target endpoint....like postgres/neo4j
-        print('Loading!')
+        # print('Everything Loaded into the DB')
     
 
 
