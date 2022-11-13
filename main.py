@@ -4,6 +4,7 @@ from rich import print
 from rich.console import Console
 from rich.table import Table
 from Transforms.CsvTransform import CsvTransform
+from Transforms.JsonTransformer import JsonTransformer
 
 from settings.general import COVID_DIR, LOCAL_ENV, PROJECT_NAME,COVID_NAME
 from covid19dh import covid19
@@ -63,7 +64,8 @@ def start(dataset: Optional[str] =None):
         
         
     if selection.lower() == '2':
-        print('This hasnt been implemented yet')
+        etl = JsonTransformer()
+        etl._start('test.json')
         
     if selection.lower() == '3':
         print('This hasnt been implemented yet')

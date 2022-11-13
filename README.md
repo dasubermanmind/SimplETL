@@ -26,11 +26,20 @@ But will look something like this
 pip install simpletl
 ```
 
-## Formats that work
-[X] - CSV
-[] - JSON -- In Progress Now!
+## Formats that work ROADMAP
+CSV - [X] 
+I am piggy backing off of pandas for all these formats and its great that I can utilize it for all the needs of the project BUT....now I kinda want to write these `read_csv`, `read_json` etc myself instead of just calling in pd.read_something. This is the next step but for now ill keep it.
+
+[] - JSON -- In Progress Now. 
 [] - XML (eww)
 [] - Excel -- This will be interesting
+
+
+Load layer - [] WIP. Default is going to be Postgres....almost done
+
+Transform Layer - [] WIP. Need to figure out what transform I will always perform
+
+Abstract Class - [] This one and only!
 
 ## Integrations with SIMPETL
 

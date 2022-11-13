@@ -84,7 +84,7 @@ class CsvTransform:
         """
 
         """
-        connector  = LoadPostgres()
+        connector = LoadPostgres()
         print(f'Connector--> {connector}')
         self.data_to_load.clear()
         
