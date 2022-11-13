@@ -1,4 +1,5 @@
 
+from collections import defaultdict
 from typing import Any, Dict, List, Optional, Union
 import logging
 from rich.console import Console
@@ -39,32 +40,34 @@ class CsvTransform:
         
         self.execute(data)
         
-    def extract(self, data: Optional[Any])-> Union[pd.DataFrame, List[Any]]:
+    def extract(self, data: Optional[Any])-> List[Any]:
         for _, row in data.iterrows():
+            print(f'Row-->{row}')
             self.data_to_transform.append(row)
         
         return self.data_to_transform
     
     
-    def transform(self, data: ...)-> ...:
+    def transform(self, data)-> pd.DataFrame:
+        """
+        This layer is responsible for extracting out column headers, data cleaning & any misc tasks 
+        that are needed
+
+        :param data
+        
+        Returns Dataframe
+        
+        """
         
         if len(data) <=0:
             self.logger.info('Failed to extract properly')
+                    
+        df = pd.DataFrame(data)
+        column_headers = list(df.columns.values)
         
-        #TODO: Need to do these programatically instead of manual parse
-        column_headers = ['state', 'death', 'deathConfirmed', 'deathIncrease', 'deathProbably'
-                          'hospitalized', 'hospitalizedCumulative', 'hospitalizedCurrently','hospitalizedIncrease'
-                          'inIcuCumulative', 'inIcuCurrently', 'negative', 'negativeIncrease', 'negativeTestsAntibody',
-                          'negativeTestsPeopleAntibody', 'negativeTestsViral', 'onVentilatorCumulative', 'onVentilatorCurrently',
-                          'positive', 'positiveCasesViral', 'positiveIncrease', 'positiveScore','positiveTestsAntibody',
-                          'positiveTestsAntigen', 'positiveTestsPeopleAntibody', 'positiveTestsPeopleAntigen', 'positiveTestsViral',
-                          'recovered', 'totalTestEncountersViral', 'totalTestEncountersViralIncrease', 'totalTestResults',
-                          'totalTestResultsIncrease', 'totalTestsAntibody', 'totalTestsAntigen','totalTestsPeopleAntibody'
-                          , 'totalTestsPeopleAntigen', 'totalTestsPeopleViral', 'totalTestsPeopleViralIncrease', 'totalTestsViral',
-                          'totalTestsViralIncrease']
+        df.fillna('No data provided at this time', inplace=True)
+        df.columns = column_headers
         
-        df = pd.DataFrame(data, columns=column_headers)
-        df.fillna(0)
         print(df)
          
         return df

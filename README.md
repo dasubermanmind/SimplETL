@@ -43,9 +43,7 @@ Abstract Class - [] This one and only!
 
 ## Integrations with SIMPETL
 
-1. Jupyter Notebook Integration [] What does this mean? My idea is simple. Lets spawn an 
-ETL process that after the loading has been done we then spawn a Jupyter Notebook with the 
-dataframe already loaded inside and maybe a couple operations loaded into the notebook. 
+1. Jupyter Notebook Integration [] What does this mean? My idea is simple. After we run an ingest we then spawn a Jupyter Notebook with the dataframe already loaded and maybe a couple operations loaded into the notebook. 
 
 1. Scheduler. Use case so lets say you want to run a specific ingest at 1523 every second monday of the month. Well you could set up a cron job to get this done. But this feels like it should be native to SimplETL.
 
