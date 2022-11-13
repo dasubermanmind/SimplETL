@@ -35,7 +35,7 @@ I am piggy backing off of pandas for all these formats and its great that I can 
 [] - Excel -- This will be interesting
 
 
-Load layer - [] WIP. Default is going to be Postgres....almost done
+Load layer - [] Default is going to be Postgres Connect to DB[X] 
 
 Transform Layer - [] WIP. Need to figure out what transform I will always perform
 

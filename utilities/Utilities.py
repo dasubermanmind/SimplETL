@@ -6,8 +6,6 @@ import requests
 import pandas as pd
 import zipfile
 
-from db.postgres import create_connection
-
 class Utilities:
     
     @staticmethod
@@ -26,9 +24,6 @@ class Utilities:
         file_handler = logging.FileHandler(filepath)
         stream_handler.setLevel(logging.WARNING)
         file_handler.setLevel(logging.ERROR)
-        
-        # create custom formatters
-        
         
         return logger
     

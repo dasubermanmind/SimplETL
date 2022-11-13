@@ -3,8 +3,7 @@ from typing import Any, List, Optional
 import logging
 from rich.console import Console
 import pandas as pd
-from db.postgres import create_connection
-from utilities.Utilities import Utilities
+from db.postgres import create_and_insert
 
 console = Console()
 
@@ -67,7 +66,7 @@ class CsvTransform:
         
         print(df)
          
-        return df
+        return df, column_headers
         
 
     def execute(self, data: pd.DataFrame)->None:
@@ -82,10 +81,10 @@ class CsvTransform:
                 extraction_data = self.extract(data)
                 print(f'Extraction Data-->{extraction_data}')
                 # transform
-                transfom_data = self.transform(extraction_data)
+                transfom_data, col_headers = self.transform(extraction_data)
                 print(f'Transofrmed Data-->{transfom_data}')
                 # load
-                self.load(transfom_data)
+                self.load(transfom_data, col_headers)
                 
                 if len(self.data_to_load) <= 0:
                     break
@@ -93,12 +92,12 @@ class CsvTransform:
                 break
     
     
-    def load(self, data)-> None:
+    def load(self, data, headers)-> None:
         """
 
         """
-        create_connection()
-    
+        create_and_insert(data,headers)
+        
         self.data_to_load.clear()
         
         # Load to a target endpoint....like postgres/neo4j
