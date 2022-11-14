@@ -27,6 +27,7 @@ def create_and_insert(data,headers)-> None:
         record = cursor.fetchone()
         print(f'You connected to --> {record}')
 
+        # TODO: Refactor this Create/Insert
         # Create the table
         def create_table(cursor, create_query):
             try:
@@ -45,7 +46,7 @@ def create_and_insert(data,headers)-> None:
         cursor.execute('ALTER TABLE maryland ADD COLUMN newcol text;')
         connection.commit()
         for k,v in data.items():
-            cursor.execute('''UPDATE your_table 
+            cursor.execute('''UPDATE maryland 
                                 SET newcol = (%s) 
                             WHERE col1 = (%s);''',(v,k))
             connection.commit()
@@ -57,7 +58,7 @@ def create_and_insert(data,headers)-> None:
         dVals = [data[col] for col in dcols]
         vals_str_list = ["%s"] * len(dVals)
         vals_str = ", ".join(vals_str_list)
-        sql = 'INSERT INTO {0}({1}) VALUES({2})'.format(os.getenv(POSTGRES_DB), dcols, vals_str)
+        sql = 'INSERT INTO {0}({1}) VALUES({2})'.format('maryland', dcols, vals_str)
         try:
             cursor.execute(sql, data)    
         except Exception as e:

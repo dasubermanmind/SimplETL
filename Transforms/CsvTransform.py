@@ -5,6 +5,7 @@ from rich.console import Console
 import pandas as pd
 from db.postgres import create_and_insert
 
+
 console = Console()
 
 
@@ -15,11 +16,7 @@ class CsvTransform:
         self.endpoint = endpoint
         self.logger = logging.basicConfig(level=logging.DEBUG)
         
-    
-    data_to_transform = []
-    data_to_load = []
-    
-    def _start(self, csv: Optional[Any])->None:
+    def extract(self, csv: Optional[Any])-> List[Any]:
         """
             The main entry point of the ETL. Within this phase we first setup
             all dependancies, authentication & any misc tasks we need to do before
@@ -27,22 +24,9 @@ class CsvTransform:
             
             Returns None
         """
-        console.print('Starting Preprocess Phase')
-        if csv:
-            data: pd.DataFrame = pd.read_csv(csv, na_values='No data gathered')
-        else:
-            # parse out the csv
-            pass
+        data = pd.read_csv(csv, na_values='No data gathered',)
+        return data
         
-        self.execute(data)
-        
-    def extract(self, data: Optional[Any])-> List[Any]:
-        for _, row in data.iterrows():
-            print(f'Row-->{row}')
-            self.data_to_transform.append(row)
-        
-        return self.data_to_transform
-    
     
     def transform(self, data)-> pd.DataFrame:
         """
@@ -69,7 +53,7 @@ class CsvTransform:
         return df, column_headers
         
 
-    def execute(self, data: pd.DataFrame)->None:
+    def execute(self, data)->None:
         """
             This is the execution loop for the extraction
             
@@ -86,7 +70,7 @@ class CsvTransform:
                 # load
                 self.load(transfom_data, col_headers)
                 
-                if len(self.data_to_load) <= 0:
+                if transfom_data is None:
                     break
             except StopIteration:
                 break
@@ -97,8 +81,7 @@ class CsvTransform:
 
         """
         create_and_insert(data,headers)
-        
-        self.data_to_load.clear()
+        data = None
         
         # Load to a target endpoint....like postgres/neo4j
         # print('Everything Loaded into the DB')

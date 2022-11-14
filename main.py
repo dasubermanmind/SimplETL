@@ -38,7 +38,7 @@ def etl_example(dataset: str):
         etl = CsvTransform(PROJECT_NAME, LOCAL_ENV, None)
         console.print('Retreiving covid data sets')
         
-        etl._start(maryland_data)
+        etl.execute(maryland_data)
         # If there were no errors then we display the goodbye message
         console.print('All finished. Please check your local directory for results or the database that you stood up')
     else:
