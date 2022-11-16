@@ -1,9 +1,11 @@
 
-from typing import Any, List, Optional
+from typing import Any, List, Optional, Tuple
 import logging
 from rich.console import Console
 import pandas as pd
-from db.postgres import create_and_insert
+from sqlalchemy import create_engine
+
+from db.postgres import connect, create_table_on_headers
 
 
 console = Console()
@@ -24,16 +26,16 @@ class CsvTransform:
             
             Returns None
         """
-        data = pd.read_csv(csv, na_values='No data gathered',)
+        data = pd.read_csv(csv)
         return data
         
     
-    def transform(self, data)-> pd.DataFrame:
+    def transform(self, data)-> Tuple[pd.DataFrame, list]:
         """
         This layer is responsible for extracting out column headers, data cleaning & any misc tasks 
         that are needed
 
-        :param data
+        :param data Dataframe
         
         Returns Dataframe
         
@@ -56,6 +58,12 @@ class CsvTransform:
     def execute(self, data)->None:
         """
             This is the execution loop for the extraction
+            :param data is a Dataframe that represents the data that is to be 
+            ingested. It will go through several layers before persisting
+            First we ingest the CSV and create a dataframe based on that
+            We then do data cleaning within the transform layer and do checks along the way
+            Finally, we can now persist to a POSTGRES DB in which everything is parsed out 
+            dyamincally 
             
             Return None
         """
@@ -68,9 +76,9 @@ class CsvTransform:
                 transfom_data, col_headers = self.transform(extraction_data)
                 print(f'Transofrmed Data-->{transfom_data}')
                 # load
-                self.load(transfom_data, col_headers)
+                tx = self.load(transfom_data, col_headers)
                 
-                if transfom_data is None:
+                if tx is None:
                     break
             except StopIteration:
                 break
@@ -80,11 +88,12 @@ class CsvTransform:
         """
 
         """
-        create_and_insert(data,headers)
-        data = None
+        engine = create_engine(connect())
+        print(f'Sql Alchemy Engine up and running...{engine}')
+        create_table_on_headers(data, engine,'maryland')
+        # insert next
         
-        # Load to a target endpoint....like postgres/neo4j
-        # print('Everything Loaded into the DB')
-    
+        # After inserted we can now "Finish" the ETL and give back statistics on the ingest
+        return None
 
 
