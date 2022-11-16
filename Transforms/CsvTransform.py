@@ -21,7 +21,7 @@ class CsvTransform:
     def extract(self, csv: Optional[Any])-> List[Any]:
         """
             The main entry point of the ETL. Within this phase we first setup
-            all dependancies, authentication & any misc tasks we need to do before
+            all dependancies & any misc tasks we need to do before
             the pipeline begins
             
             Returns None
@@ -88,9 +88,9 @@ class CsvTransform:
         """
 
         """
-        engine = create_engine(connect())
-        print(f'Sql Alchemy Engine up and running...{engine}')
-        create_table_on_headers(data, engine,'maryland')
+        db = create_engine(connect())
+        print(f'Sql Alchemy Engine up and running...{db}')
+        create_table_on_headers(data, db,'maryland')
         # insert next
         
         # After inserted we can now "Finish" the ETL and give back statistics on the ingest

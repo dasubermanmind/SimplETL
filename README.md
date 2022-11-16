@@ -5,7 +5,7 @@
 \____/\_/\_/  \|\_/   \____/\____\  \_/  \____/
 
 By dasubermanmind13
-
+Y does this look like crapp....?
 
 
 ## Get your data loaded
@@ -28,7 +28,6 @@ pip install simpletl
 
 ## Formats that work ROADMAP
 CSV - [X] 
-I am piggy backing off of pandas for all these formats and its great that I can utilize it for all the needs of the project BUT....now I kinda want to write these `read_csv`, `read_json` etc myself instead of just calling in pd.read_something. This is the next step but for now ill keep it.
 
 [] - JSON -- In Progress Now. 
 [] - XML (eww)
