@@ -51,6 +51,8 @@ class CsvTransform:
         df.columns = column_headers
         
         print(df)
+        # TODO: Update normalize fn
+        # df = normalize_df(df)
          
         return df, column_headers
         
@@ -73,10 +75,10 @@ class CsvTransform:
                 extraction_data = self.extract(data)
                 print(f'Extraction Data-->{extraction_data}')
                 # transform
-                transfom_data, col_headers = self.transform(extraction_data)
+                transfom_data, _ = self.transform(extraction_data)
                 print(f'Transofrmed Data-->{transfom_data}')
                 # load
-                tx = self.load(transfom_data, col_headers)
+                tx = self.load(transfom_data)
                 
                 if tx is None:
                     break
@@ -84,9 +86,11 @@ class CsvTransform:
                 break
     
     
-    def load(self, data, headers)-> None:
+    def load(self, data)-> None:
         """
-
+            :param data Dataframe
+            
+            Returns None
         """
         db = create_engine(connect())
         print(f'Sql Alchemy Engine up and running...{db}')

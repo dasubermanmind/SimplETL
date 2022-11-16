@@ -55,5 +55,9 @@ class Utilities:
             
         return None
     
+    @staticmethod
+    def normalize_df(data: pd.Dataframe):
+        pass
+    
         
         
