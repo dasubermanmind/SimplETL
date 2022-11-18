@@ -1,5 +1,4 @@
 import os
-import pandas as pd
 import psycopg2
 from dotenv import load_dotenv
 from db.general import POSTGRES_HOST, POSTGRES_PASSWORD, POSTGRES_PORT, POSTGRES_DB, POSTGRES_USER

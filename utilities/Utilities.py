@@ -1,7 +1,6 @@
 
 import logging
 import os
-from pathlib import Path
 import requests
 import pandas as pd
 import zipfile
@@ -49,10 +48,11 @@ class Utilities:
                 os.makedirs(file_name)
                 
             with zipfile.ZipFile(file_name, 'r') as zipper:
-                zipper.extractall('data')
+                zipper.extractall('data/'+file_name)
         except BaseException as e:
             print(f'oops files had issues { e }')
-            
+        
+        print('Extraction done.')
         return None
     
     @staticmethod

@@ -5,7 +5,7 @@ from rich.console import Console
 import pandas as pd
 from sqlalchemy import create_engine
 
-from db.postgres import connect, create_table_on_headers
+from db.postgres import connect, create_table_on_headers, insert
 
 
 console = Console()
@@ -57,7 +57,7 @@ class CsvTransform:
         return df, column_headers
         
 
-    def execute(self, data)->None:
+    def execute(self, data, data_source_name)->None:
         """
             This is the execution loop for the extraction
             :param data is a Dataframe that represents the data that is to be 
@@ -78,7 +78,7 @@ class CsvTransform:
                 transfom_data, _ = self.transform(extraction_data)
                 print(f'Transofrmed Data-->{transfom_data}')
                 # load
-                tx = self.load(transfom_data)
+                tx = self.load(transfom_data, data_source_name)
                 
                 if tx is None:
                     break
@@ -86,7 +86,7 @@ class CsvTransform:
                 break
     
     
-    def load(self, data)-> None:
+    def load(self, data, name)-> None:
         """
             :param data Dataframe
             
@@ -94,9 +94,9 @@ class CsvTransform:
         """
         db = create_engine(connect())
         print(f'Sql Alchemy Engine up and running...{db}')
-        create_table_on_headers(data, db,'maryland')
+        create_table_on_headers(data, db, name)
         # insert next
-        
+        insert(engine, data, name)
         # After inserted we can now "Finish" the ETL and give back statistics on the ingest
         return None
 
