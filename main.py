@@ -35,7 +35,11 @@ def intro():
     console.print(table)
 
 @app.command()
-def etl_example():
+def etl_example()-> None:
+    """
+        The command for creating a quick demo of the Ingest Tool. This demo is strictly only going 
+        to use the CSV tranformer. 
+    """
     maryland_data = 'data\covid\maryland-history.csv'
     
     name = maryland_data[-6:]
@@ -46,7 +50,16 @@ def etl_example():
     console.print('All finished. Please check your local directory for results or the database that you stood up')
     
 @app.command()
-def start(dataset: Optional[str] =None):
+def start(dataset: Optional[str] =None)-> None:
+    """
+        The main execution for handling all the different types of file formats. 
+        
+        :params dataset, The optional CLI argument. This will be used when the user selects any of the 
+        options 1-4 and has a local copy of what they are wanting to ingest
+        
+        returns None
+    
+    """
     table = Table('What type of data set are you wanting to ingest?')
     table.add_row('1. CSV')
     table.add_row('2. JSON File')
