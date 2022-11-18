@@ -1,4 +1,4 @@
-PROJECT_NAME  = 'SimplETL'
+PROJECT_NAME = 'SimplETL'
 
 LOCAL_ENV = 'local'
 ENDPOINTS = ['Mysql', 'Neo4j', 'Postgres']
@@ -6,9 +6,3 @@ ENDPOINTS = ['Mysql', 'Neo4j', 'Postgres']
 COVID_DIR = 'data/covid/'
 
 COVID_NAME = 'owid-covid-data.csv.zip'
-
-
-
-
-
-
