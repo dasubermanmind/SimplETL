@@ -1,18 +1,19 @@
 
 import pandas as pd
 
+
 class JsonTransformer:
     # TODO: Need to create a base class and then have all my other transformers inherit.
     def __init__(self):
         pass
-    
+
     def _start(self, json_file_path: str):
         df = pd.read_json(json_file_path)
         print(df)
-    
+
     def execute(self):
         pass
-    
+
     def extract(self):
         pass
 
@@ -22,7 +23,7 @@ class JsonTransformer:
             Normalize will convert to a flat DS (a record) to be persisted to postgres
             The big question is whether or not I want to extract the subsets of each
             json structure 
-            
+
             {
                 'main':{
                     title: foo,
@@ -34,9 +35,9 @@ class JsonTransformer:
                     }
                 }
             } 
-        
+
         """
         pass
-    
+
     def load(self):
         pass
