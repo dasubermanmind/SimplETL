@@ -1,23 +1,13 @@
-
-from typing import Any, List, Optional, Tuple
-import logging
+from typing import Any, List, Optional
 from rich.console import Console
 import pandas as pd
-from sqlalchemy import create_engine
 
-from db.postgres import connect, create_table_on_headers, insert
-
+from Transforms.Optimus import Optimus
 
 console = Console()
 
-
-class CsvTransform:
-    def __init__(self, project_name, environment, endpoint) -> None:
-        self.project_name = project_name
-        self.environment = environment
-        self.endpoint = endpoint
-        self.logger = logging.basicConfig(level=logging.DEBUG)
-
+class CsvTransform(Optimus):
+    
     def extract(self, csv: Optional[Any]) -> List[Any]:
         """
             The main entry point of the ETL. Within this phase we first setup
@@ -29,6 +19,10 @@ class CsvTransform:
         data = pd.read_csv(csv)
         return data
 
+
+    def normalize(data: ...)-> ...:
+        print('Inside normalize')
+        
     
     def execute(self, data, data_source_name) -> None:
         """
@@ -57,5 +51,4 @@ class CsvTransform:
                     break
             except StopIteration:
                 break
-
-    
+ 
