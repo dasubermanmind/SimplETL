@@ -4,7 +4,7 @@ from typing import Tuple
 
 import pandas as pd
 from sqlalchemy import create_engine
-
+import uuid
 from db.postgres import connect, create_table_on_headers, insert
 
 
@@ -59,10 +59,13 @@ class Optimus:
 
         df.fillna('No data provided at this time', inplace=True)
         df.columns = column_headers
-
-        df = self.normalize_df(df)
         
-        transform_doc['_idx'] = df
+        df.normalize_df(df) 
+        
+        transform_doc = {
+            'main_data': df,
+            '_id_': uuid.uuid4().hex 
+        }
         
         print(transform_doc)
 
@@ -73,7 +76,7 @@ class Optimus:
     
     def load(self, data, name) -> None:
         """
-            :param data Dataframe
+            :param data Dictionary
 
             Returns None
         """
