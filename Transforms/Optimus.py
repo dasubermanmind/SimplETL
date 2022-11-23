@@ -1,6 +1,6 @@
 from abc import abstractclassmethod
 import logging
-from typing import Tuple
+from typing import Any, Dict, Tuple
 
 import pandas as pd
 from sqlalchemy import create_engine
@@ -52,7 +52,7 @@ class Optimus:
         # Transform doc is the generic transform that will be used for all of the 
         # transformers, the impl for the other transformers should have a normalize fn 
         # that takes care of the batched datum.
-        transform_doc = {}
+        transform_doc: Dict[str, Any] = {}
         
         df = pd.DataFrame(data)
         column_headers = list(df.columns.values)
@@ -60,10 +60,10 @@ class Optimus:
         df.fillna('No data provided at this time', inplace=True)
         df.columns = column_headers
         
-        df.normalize_df(df) 
+        results = self.normalize_df(df) 
         
         transform_doc = {
-            'main_data': df,
+            'main_data': results,
             '_id_': uuid.uuid4().hex 
         }
         
