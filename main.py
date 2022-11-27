@@ -5,8 +5,7 @@ import typer
 from rich import print
 from rich.console import Console
 from rich.table import Table
-from Transforms.CsvTransform import CsvTransform
-from Transforms.JsonTransformer import JsonTransformer
+from Transforms import CsvTransform
 
 from settings.general import COVID_DIR, LOCAL_ENV, PROJECT_NAME, COVID_NAME
 from utilities.Utilities import Utilities

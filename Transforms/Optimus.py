@@ -1,4 +1,5 @@
 from abc import abstractclassmethod
+from collections import defaultdict
 import logging
 from typing import Any, Dict, Tuple
 
@@ -6,6 +7,7 @@ import pandas as pd
 from sqlalchemy import create_engine
 import uuid
 from db.postgres import connect, create_table_on_headers, insert
+from settings.general import ID, MAIN_DATA
 
 
 """
@@ -35,7 +37,23 @@ class Optimus:
     def extract(self):
         raise NotImplementedError
     
-    # TODO: Figure out what the generic fn signature should be
+    
+    """
+        The return signature should be as follows
+        
+        JSON->
+        {
+            main_data: {
+                pd.Dataframe data that is associated with the ingest
+            }
+            id: some generic id 
+            ...
+            potentially---meta_data:{
+                another default dict that aggregates other pieces of data
+                like user_name, where it was ran etc
+            }
+        }
+    """
     def transform(self, data) -> ...:
         """
         This layer is responsible for extracting out column headers, data cleaning & any misc tasks 
@@ -46,31 +64,31 @@ class Optimus:
         Returns Dataframe
 
         """
-        if len(data) <= 0 or data is None:
-            self.logger.info('Failed to extract properly')
+        # if len(data) <= 0 or data is None:
+        #     self.logger.info('Failed to extract properly')
 
-        # Transform doc is the generic transform that will be used for all of the 
-        # transformers, the impl for the other transformers should have a normalize fn 
-        # that takes care of the batched datum.
-        transform_doc: Dict[str, Any] = {}
+        # # Transform doc is the generic transform that will be used for all of the 
+        # # transformers, the impl for the other transformers should have a normalize fn 
+        # # that takes care of the batched datum.
+        # transform_doc: Dict[str, Any] = defaultdict(str, Any)
         
-        df = pd.DataFrame(data)
-        column_headers = list(df.columns.values)
+        # df = pd.DataFrame(data)
+        # column_headers = list(df.columns.values)
 
-        df.fillna('No data provided at this time', inplace=True)
-        df.columns = column_headers
+        # df.fillna('No data provided at this time', inplace=True)
+        # df.columns = column_headers
         
-        results = self.normalize_df(df) 
+        # results = self.normalize_df(df) 
+        # # TODO: ID should actually be a cryptographic key to avoid collisions
+        # transform_doc = {
+        #     MAIN_DATA: results,
+        #     ID: uuid.uuid4().hex 
+        # }
         
-        transform_doc = {
-            'main_data': results,
-            '_id_': uuid.uuid4().hex 
-        }
-        
-        print(transform_doc)
+        # print(transform_doc)
 
-        # TODO: Investigate if I should cast transform_doc to a list or something (list[tuples])
-        return transform_doc, column_headers
+        # # TODO: Investigate if I should cast transform_doc to a list or something (list[tuples])
+        # return transform_doc, column_headers
 
     
     
@@ -80,11 +98,12 @@ class Optimus:
 
             Returns None
         """
-        db = create_engine(connect())
-        print(f'Sql Alchemy Engine up and running...{db}')
-        create_table_on_headers(data, db, name)
+        print('start the loading phase')
+        #db = create_engine(connect())
+        #print(f'Sql Alchemy Engine up and running...{db}')
+        #create_table_on_headers(data, db, name)
         # insert next
-        insert(db, data, name)
+        #insert(db, data, name)
         # After inserted we can now "Finish" the ETL and give back statistics on the ingest
         return None
 

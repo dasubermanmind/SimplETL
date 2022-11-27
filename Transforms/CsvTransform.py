@@ -1,6 +1,6 @@
 from typing import Any, List, Optional
-from rich.console import Console
 import pandas as pd
+from rich.console import Console
 
 from Transforms.Optimus import Optimus
 
