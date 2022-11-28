@@ -1,3 +1,14 @@
 etl
 env
 .env
+db/__pycache__/general.cpython-310.pyc
+db/__pycache__/postgres.cpython-310.pyc
+settings/__pycache__/general.cpython-310.pyc
+Transforms/__pycache__/CsvTransform.cpython-310.pyc
+Transforms/__pycache__/Optimus.cpython-310.pyc
+utilities/__pycache__/Utilities.cpython-310.pyc
+db/__pycache__/general.cpython-310.pyc
+db/__pycache__/postgres.cpython-310.pyc
+settings/__pycache__/general.cpython-310.pyc
+Transforms/__pycache__/CsvTransform.cpython-310.pyc
+utilities/__pycache__/Utilities.cpython-310.pyc
