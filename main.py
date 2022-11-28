@@ -79,17 +79,13 @@ def start(dataset: Optional[str] = None) -> None:
         csv = typer.prompt(
             'Please place your csv within the data directory. What did you call it?')
         print(f'Input--->{csv}')
-        # What we need to do here is basically parse out the dat dir and find the prefix of the file
-        # iterate through the data dir
-        all_files_found = [file
-                           for path, subdir, files in os.walk(csv)
-                           for file in glob(os.path.join(path, EXTENSION))]
-
-        print(f'Files Found--->{all_files_found}')
-
-        # Extract the zip
-        # Utilities.extract_from_csv(csv)
-        # that the user entered and then parse it
+        
+        for files in os.listdir(f'data/{csv}'):
+            f = os.path.join(csv, files)
+            print(f'Filepath{type(f)}')
+            #Extract the zip
+            if f.endswith('.zip'):
+                Utilities.extract_from_csv(f)
 
         #etl = CsvTransform(PROJECT_NAME, LOCAL_ENV, None)
 
