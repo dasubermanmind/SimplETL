@@ -1,5 +1,6 @@
 etl
 env
+simpletl
 .env
 db/__pycache__/general.cpython-310.pyc
 db/__pycache__/postgres.cpython-310.pyc
