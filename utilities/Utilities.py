@@ -37,6 +37,7 @@ class Utilities:
 
     @staticmethod
     def write_to_csv(data, file_name: str) -> None:
+        print('Write')
         df = pd.DataFrame(dict([(k, pd.Series(v)) for k, v in data.items()]))
         return df.to_csv(file_name)
 
@@ -46,8 +47,8 @@ class Utilities:
             if not os.path.exists(file_name):
                 os.makedirs(file_name)
 
-            with zipfile.ZipFile('data/covid/owid-covid-data.csv.zip', 'r') as zipper:
-                zipper.extractall('')
+            with zipfile.ZipFile('data/resultbook2.csv', 'r') as zipper:
+                zipper.extractall('data/resultbook2.csv')
         except BaseException as e:
             print(f'oops files had issues { e }')
 

@@ -78,16 +78,15 @@ def start(dataset: Optional[str] = None) -> None:
     if selection.lower() == '1':
         csv = typer.prompt(
             'Please place your csv within the data directory. What did you call it?')
-        # print(f'Input--->{csv}')
         
-        print({os.listdir('data/')})
-        
-        # for files in os.listdir(f'data/{csv}'):
-        #     f = os.path.join(csv, files)
-        #     print(f'Filepath-->{f}')
-        #     #Extract the zip
-        #     if f.endswith('.zip'):
-        #         Utilities.extract_from_csv(f)
+        for files in os.listdir(f'data/{csv}'):
+            f = os.path.join(csv, files)
+            print(f'Filepath-->{f}')
+            #Extract the zip
+            if f.endswith('.zip'):
+                Utilities.extract_from_csv(f)
+            else:
+                Utilities.write_to_csv(f)
 
         #etl = CsvTransform(PROJECT_NAME, LOCAL_ENV, None)
 
