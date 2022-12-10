@@ -58,3 +58,13 @@ class Utilities:
     @staticmethod
     def normalize_df(data: pd.DataFrame):
         pass
+    
+    
+    @staticmethod
+    def remove_files(file_path: str)->None:
+        try:
+            if not os.path.exists(file_path):
+                os.remove(file_path)
+        except Exception:
+            print('File not found')
+            
