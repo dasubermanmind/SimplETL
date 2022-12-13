@@ -42,7 +42,7 @@ class Utilities:
         return df.to_csv(file_name)
 
     @staticmethod
-    def extract_from_csv(file_name) -> None:
+    def extract_from_csv(file_name, logger) -> None:
         try:
             if not os.path.exists(file_name):
                 os.makedirs(file_name)
@@ -50,9 +50,9 @@ class Utilities:
             with zipfile.ZipFile('data/resultbook2.csv', 'r') as zipper:
                 zipper.extractall('data/resultbook2.csv')
         except BaseException as e:
-            print(f'oops files had issues { e }')
+            logger(f'oops files had issues { e }')
 
-        print('Extraction done.')
+        logger('Extraction done.')
         return None
 
     @staticmethod
