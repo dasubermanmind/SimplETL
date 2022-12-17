@@ -64,16 +64,16 @@ class Optimus:
         Returns Dataframe
 
         """
-        # if len(data) <= 0 or data is None:
-        #     self.logger.info('Failed to extract properly')
+        if len(data) <= 0 or data is None:
+            self.logger.info('Failed to extract properly')
 
         # # Transform doc is the generic transform that will be used for all of the 
         # # transformers, the impl for the other transformers should have a normalize fn 
         # # that takes care of the batched datum.
-        # transform_doc: Dict[str, Any] = defaultdict(str, Any)
+        transform_doc: Dict[str, Any] = defaultdict(str, Any)
         
-        # df = pd.DataFrame(data)
-        # column_headers = list(df.columns.values)
+        df = pd.DataFrame(data)
+        column_headers = list(df.columns.values)
 
         # df.fillna('No data provided at this time', inplace=True)
         # df.columns = column_headers
