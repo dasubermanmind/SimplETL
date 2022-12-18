@@ -75,10 +75,10 @@ class Optimus:
         df = pd.DataFrame(data)
         column_headers = list(df.columns.values)
 
-        # df.fillna('No data provided at this time', inplace=True)
-        # df.columns = column_headers
+        df.fillna('No data provided at this time', inplace=True)
+        df.columns = column_headers
         
-        # results = self.normalize_df(df) 
+        results = self.normalize_df(df) 
         # # TODO: ID should actually be a cryptographic key to avoid collisions
         # transform_doc = {
         #     MAIN_DATA: results,
