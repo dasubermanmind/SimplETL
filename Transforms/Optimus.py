@@ -80,10 +80,10 @@ class Optimus:
         
         results = self.normalize_df(df) 
         # # TODO: ID should actually be a cryptographic key to avoid collisions
-        # transform_doc = {
-        #     MAIN_DATA: results,
-        #     ID: uuid.uuid4().hex 
-        # }
+        transform_doc = {
+            MAIN_DATA: results,
+            ID: uuid.uuid4().hex 
+        }
         
         # print(transform_doc)
 
