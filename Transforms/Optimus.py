@@ -85,7 +85,7 @@ class Optimus:
             ID: uuid.uuid4().hex 
         }
         
-        # print(transform_doc)
+        print(transform_doc)
 
         # # TODO: Investigate if I should cast transform_doc to a list or something (list[tuples])
         # return transform_doc, column_headers
