@@ -99,7 +99,7 @@ class Optimus:
             Returns None
         """
         print('start the loading phase')
-        #db = create_engine(connect())
+        db = create_engine(connect())
         #print(f'Sql Alchemy Engine up and running...{db}')
         #create_table_on_headers(data, db, name)
         # insert next
