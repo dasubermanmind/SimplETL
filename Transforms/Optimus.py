@@ -88,7 +88,7 @@ class Optimus:
         print(transform_doc)
 
         # # TODO: Investigate if I should cast transform_doc to a list or something (list[tuples])
-        # return transform_doc, column_headers
+        return transform_doc, column_headers
 
     
     
