@@ -40,9 +40,17 @@ class CsvTransform(Optimus):
             try:
                 # extract
                 extraction_data = self.extract(data)
+                if extraction_data is None:
+                    print(f'Failed: Extraction Data-->{extraction_data}')
+                    break
+                
                 print(f'Extraction Data-->{extraction_data}')
                 # transform
                 transfom_data, _ = self.transform(extraction_data)
+                if transfom_data is None:
+                    print(f'Failed: Extraction Data-->{transfom_data}')
+                    break
+                
                 print(f'Transofrmed Data-->{transfom_data}')
                 # load
                 tx = self.load(transfom_data, data_source_name)
