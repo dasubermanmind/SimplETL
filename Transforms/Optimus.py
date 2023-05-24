@@ -100,10 +100,10 @@ class Optimus:
         """
         print('start the loading phase')
         db = create_engine(connect())
-        #print(f'Sql Alchemy Engine up and running...{db}')
+        print(f'Sql Alchemy Engine up and running...{db}')
         #create_table_on_headers(data, db, name)
         # insert next
-        #insert(db, data, name)
+        insert(db, data, name)
         # After inserted we can now "Finish" the ETL and give back statistics on the ingest
         return None
 
