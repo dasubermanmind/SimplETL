@@ -21,23 +21,23 @@ from settings.general import ID, MAIN_DATA
 
 
 class Optimus:    
-    def __init__(self, project_name, environment, endpoint):
+    def __init__(self, project_name, environment):
         self.project_name = project_name
         self.environment = environment
-        self.endpoint = endpoint
-        self.logger = logging.basicConfigZ(level=logging.DEBUG)
+        #self.logger = logging.basicConfigZ(level=logging.DEBUG)
 
     # These are part of the contract. These must be implemented for each transformer
     @abstractclassmethod
-    def normalize(self , data: ...):
+    def normalize(self , data: Any):
        raise NotImplementedError
     
-    
+    @abstractclassmethod
+    def execute(self, data: Any):
+        raise NotImplementedError
+
     @abstractclassmethod
     def extract(self):
         raise NotImplementedError
-    
-    
     """
         The return signature should be as follows
         
@@ -65,7 +65,7 @@ class Optimus:
 
         """
         if len(data) <= 0 or data is None:
-            self.logger.info('Failed to extract properly')
+            print('Failed to extract properly')
 
         # # Transform doc is the generic transform that will be used for all of the 
         # # transformers, the impl for the other transformers should have a normalize fn 

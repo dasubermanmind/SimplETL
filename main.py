@@ -14,7 +14,7 @@ from utilities.Utilities import Utilities
 # Consts and appwide declarations
 app = typer.Typer()
 console = Console()
-zip = 'owid-covid-data.csv.zip'
+covid_zip = 'owid-covid-data.csv.zip'
 maryland = 'maryland'
 
 ZIP_EXTENSION = '*.csv.zip'
@@ -38,20 +38,20 @@ def intro():
 
 
 @app.command()
-def etl_example() -> None:
+def example() -> None:
     """
         The command for creating a quick demo of the Ingest Tool. This demo is strictly only going
         to use the CSV tranformer.
     """
-    maryland_data = 'data\\covid\\maryland-history.csv'
+    maryland_data = 'data/covid/maryland-history.csv'
 
     name = maryland_data[-6:]
 
-    etl = CsvTransform(PROJECT_NAME, LOCAL_ENV, None)
+    etl = CsvTransform(PROJECT_NAME, LOCAL_ENV)
 
-    etl.execute(maryland_data, name)
-    console.print(
-        'All finished. Please check your local directory for results or the database that you stood up')
+    #etl.execute(maryland_data, name)
+    #console.print(
+     #   'All finished. Please check your local directory for results or the database that you stood up')
 
 
 @app.command()
@@ -75,18 +75,25 @@ def start(dataset: Optional[str] = None) -> None:
     selection: str = typer.prompt('Select 1-4')
     console.print(f'You selected { selection }')
 
+
     if selection.lower() == '1':
         csv = typer.prompt(
             'Please place your csv within the data directory. What did you call it?')
-        
-        for files in os.listdir(f'data/{csv}'):
-            f = os.path.join(csv, files)
-            print(f'Filepath-->{f}')
-            #Extract the zip
-            if f.endswith('.zip'):
-                Utilities.extract_from_csv(f)
-            else:
-                Utilities.write_to_csv(f)
+       
+        try:
+            if len(csv) > 0:
+                print(csv)
+                for files in os.listdir(f'/data/{csv}'):
+                    f = os.path.join(csv, files)
+                    print(f'Path-->{f}')
+                    #Extract the zip            
+                    if f.endswith('.zip'):
+                        print('entered')
+                        Utilities.extract_from_csv(f)
+                    else:
+                        Utilities.write_to_csv(f)
+        except:
+            print('An exception happened. ')
 
         #etl = CsvTransform(PROJECT_NAME, LOCAL_ENV, None)
 

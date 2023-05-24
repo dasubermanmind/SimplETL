@@ -7,8 +7,16 @@ from Transforms.Optimus import Optimus
 console = Console()
 
 class CsvTransform(Optimus):
-    
-    def extract(self, csv: Optional[Any]) -> List[Any]:
+   
+
+    def __init__(self, project_name, env):        
+        super().__init__(project_name, env)
+        self.project_name = project_name
+        self.environment = env
+        print('INSIDE CSV TRANSFORM')
+
+
+    def extract(self, csv: Any) -> List[Any]:
         """
             The main entry point of the ETL. Within this phase we first setup
             all dependancies & any misc tasks we need to do before
@@ -16,12 +24,14 @@ class CsvTransform(Optimus):
 
             Returns None
         """
+        print('INSIDE EXTRACT')
         data = pd.read_csv(csv)
-        return data
+        return list(data)
 
 
-    def normalize(data: ...)-> ...:
+    def normalize(self, data: Any)-> ...:
         print('Inside normalize')
+        return data
         
     
     def execute(self, data, data_source_name) -> None:
