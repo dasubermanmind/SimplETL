@@ -24,7 +24,6 @@ class Optimus:
     def __init__(self, project_name, environment):
         self.project_name = project_name
         self.environment = environment
-        #self.logger = logging.basicConfigZ(level=logging.DEBUG)
 
     # These are part of the contract. These must be implemented for each transformer
     @abstractclassmethod

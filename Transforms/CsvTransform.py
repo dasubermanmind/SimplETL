@@ -16,7 +16,7 @@ class CsvTransform(Optimus):
         print('INSIDE CSV TRANSFORM')
 
 
-    def extract(self, csv: Any) -> List[Any]:
+    def extract(self, csv: Any) -> Any:
         """
             The main entry point of the ETL. Within this phase we first setup
             all dependancies & any misc tasks we need to do before
@@ -46,6 +46,7 @@ class CsvTransform(Optimus):
 
             Return None
         """
+        print("inside execute")
         while True:
             try:
                 # extract

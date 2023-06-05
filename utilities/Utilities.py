@@ -1,9 +1,12 @@
 
 import logging
 import os
+import zipfile
 import requests
 import pandas as pd
-import zipfile
+from zipfile import ZipFile
+
+from settings.general import ZIP_EXTENSION
 
 
 class Utilities:
@@ -67,4 +70,14 @@ class Utilities:
                 os.remove(file_path)
         except Exception:
             print('File not found')
-            
+
+    @staticmethod
+    def preprocess():       
+        path = 'data/'
+        for filenames in os.listdir(path):
+            if filenames.endswith(ZIP_EXTENSION):
+                print("Zip file found")
+                file_to_extract = path + filenames                
+                with zipfile.ZipFile(file_to_extract, 'r') as z:
+                    z.extractall('/data')
+                    print('Extracted please check the data directory')

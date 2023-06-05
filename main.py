@@ -36,26 +36,8 @@ def intro():
         'In order to start the ETL process first identify the data source. Please visit the readme for kaggle approved datasets')
     console.print(table)
 
-
 @app.command()
-def example() -> None:
-    """
-        The command for creating a quick demo of the Ingest Tool. This demo is strictly only going
-        to use the CSV tranformer.
-    """
-    maryland_data = 'data/covid/maryland-history.csv'
-
-    name = maryland_data[-6:]
-
-    etl = CsvTransform(PROJECT_NAME, LOCAL_ENV)
-
-    #etl.execute(maryland_data, name)
-    #console.print(
-     #   'All finished. Please check your local directory for results or the database that you stood up')
-
-
-@app.command()
-def start(dataset: Optional[str] = None) -> None:
+def etl() -> None:
     """
         The main execution for handling all the different types of file formats.
 
@@ -67,45 +49,22 @@ def start(dataset: Optional[str] = None) -> None:
     """
     table = Table('What type of data set are you wanting to ingest?')
     table.add_row('1. CSV')
-    table.add_row('2. JSON File')
-    table.add_row('3. XML')
-    table.add_row('4. Excel')
 
     console.print(table)
     selection: str = typer.prompt('Select 1-4')
     console.print(f'You selected { selection }')
 
-
     if selection.lower() == '1':
-        csv = typer.prompt(
-            'Please place your csv within the data directory. What did you call it?')
-       
-        try:
-            if len(csv) > 0:
-                print(csv)
-                for files in os.listdir(f'/data/{csv}'):
-                    f = os.path.join(csv, files)
-                    print(f'Path-->{f}')
-                    #Extract the zip            
-                    if f.endswith('.zip'):
-                        print('entered')
-                        Utilities.extract_from_csv(f)
-                    else:
-                        Utilities.write_to_csv(f)
-        except:
-            print('An exception happened. ')
-
-        #etl = CsvTransform(PROJECT_NAME, LOCAL_ENV, None)
-
-    # if selection.lower() == '2':
-    #     etl = JsonTransformer()
-    #     etl._start('test.json')
-
-    # if selection.lower() == '3':
-    #     print('This hasnt been implemented yet')
-
-    # if selection.lower() == '4':
-    #     print('This hasnt been implemented yet')
+        # Pre-process Stage
+        typer.echo('Please make sure your zip file is in the data dir')
+        Utilities.preprocess()
+        # Data has been pre-processed
+        # Create the ETL Object
+        etl = CsvTransform.CsvTransform(maryland, 'dev')
+        # Execute
+        etl.execute('data/m.csv', maryland)
+    else:
+        print('We only support CSV right now sorry')
 
 
 if __name__ == '__main__':

@@ -18,7 +18,9 @@ By default we setup a Postgres docker container and transform targetting this da
 
 
 ## Installation
-COMING SOON!
+## Windows Virtual Env
+`python -m venv env`
+`source venv/Scripts/activate`
 
 But will look something like this
 
