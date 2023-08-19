@@ -3,8 +3,6 @@ pandas
 numpy
 rich
 requests
-psycopg2
-psycopg-binary
 python-dotenv
 SQLAlchemy
 flake8

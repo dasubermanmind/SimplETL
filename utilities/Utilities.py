@@ -2,11 +2,13 @@
 import logging
 import os
 import zipfile
+from typing import Dict, Any, List, Optional
+
 import requests
 import pandas as pd
 from zipfile import ZipFile
 
-from settings.general import ZIP_EXTENSION
+from settings.general import ZIP_EXTENSION, MAIN_DATA, NUMERICAL_DATA
 
 
 class Utilities:
@@ -58,13 +60,70 @@ class Utilities:
         logger('Extraction done.')
         return None
 
+
     @staticmethod
-    def normalize_df(data: pd.DataFrame):
-        pass
+    def numerical_data(data: Dict[str, Any], numeria_keys):
+        numeria = {}
+
+        for key in data.keys():
+            try:
+                if numeria_keys and key in numeria_keys.keys():
+                    mp = numeria_keys[key]
+                    numeria[mp] = float(data[key])
+            except Exception as e:
+                print(f'Error Parsing Numerical Data{e}')
+
+        return numeria
+
+
+    @staticmethod
+    def main_data(data, skip_list: Optional[List[str]]= None):
+        raw = data.copy()
+
+        if skip_list:
+            for key in skip_list:
+                if key in raw:
+                    del raw[key]
+
+        return raw
+
+
+    @staticmethod
+    def normalize(data, parameters=None):
+        """
+                    The return signature should be as follows
+
+                    JSON->
+                    {
+                        main_data: {
+                            pd.Dataframe data that is associated with the ingest
+                        }
+                        id: some generic id
+                        ...
+                        potentially---meta_data:{
+                            another default dict that aggregates other pieces of data
+                            like user_name, where it was ran etc
+                        }
+                    }
+        """
+        # TODO: Prrune None vals
+        # parse out different fields to normalize
+        # Parse out main data
+        # parse out numerical data
+        numerical = Utilities.numerical_data(data, parameters)
+        # parse out time data etc...
+        main = Utilities.main_data(data)
+
+        json_document = {
+            MAIN_DATA: main,
+            NUMERICAL_DATA: numerical
+        }
+
+        return json_document
     
     
     @staticmethod
-    def remove_files(file_path: str)->None:
+    def remove_files(file_path: str)-> None:
         try:
             if not os.path.exists(file_path):
                 os.remove(file_path)
@@ -72,12 +131,11 @@ class Utilities:
             print('File not found')
 
     @staticmethod
-    def preprocess():       
-        path = 'data/'
-        for filenames in os.listdir(path):
+    def preprocess(data_file_path) -> ...:
+        for filenames in os.listdir(data_file_path):
             if filenames.endswith(ZIP_EXTENSION):
                 print("Zip file found")
-                file_to_extract = path + filenames                
+                file_to_extract = data_file_path + filenames
                 with zipfile.ZipFile(file_to_extract, 'r') as z:
                     z.extractall('/data')
                     print('Extracted please check the data directory')

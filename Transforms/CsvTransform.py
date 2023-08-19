@@ -3,6 +3,7 @@ import pandas as pd
 from rich.console import Console
 
 from Transforms.Optimus import Optimus
+from settings.general import DATA
 
 console = Console()
 
@@ -16,17 +17,20 @@ class CsvTransform(Optimus):
         print('INSIDE CSV TRANSFORM')
 
 
-    def extract(self, csv: Any) -> Any:
+    def extract(self, data: ...) -> ...:
         """
             The main entry point of the ETL. Within this phase we first setup
             all dependancies & any misc tasks we need to do before
             the pipeline begins
 
-            Returns None
+            Returns datafram
         """
-        print('INSIDE EXTRACT')
-        data = pd.read_csv(csv)
-        return list(data)
+        try:
+            df: pd.DataFrame = data
+            df.fillna("", inplace=True)
+            return df.to_dict(orient="records")
+        except StopIteration:
+            return []
 
 
     def normalize(self, data: Any)-> ...:
@@ -34,7 +38,7 @@ class CsvTransform(Optimus):
         return data
         
     
-    def execute(self, data, data_source_name) -> None:
+    def execute(self, parameters) -> None:
         """
             This is the execution loop for the extraction
             :param data is a Dataframe that represents the data that is to be 
@@ -47,6 +51,7 @@ class CsvTransform(Optimus):
             Return None
         """
         print("inside execute")
+        data = parameters[DATA]
         while True:
             try:
                 # extract
@@ -64,7 +69,7 @@ class CsvTransform(Optimus):
                 
                 print(f'Transofrmed Data-->{transfom_data}')
                 # load
-                tx = self.load(transfom_data, data_source_name)
+                tx = self.load(transfom_data)
 
                 if tx is None:
                     break
