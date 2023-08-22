@@ -1,8 +1,10 @@
 
 import logging
 import os
+import uuid
 import zipfile
 from typing import Dict, Any, List, Optional
+import elasticsearch
 
 import requests
 import pandas as pd
@@ -139,3 +141,37 @@ class Utilities:
                 with zipfile.ZipFile(file_to_extract, 'r') as z:
                     z.extractall('/data')
                     print('Extracted please check the data directory')
+
+
+    @staticmethod
+    def get_elastic_client():
+        env_hosts = os.getenv(ES_HOST_KEY)
+        host: List[str] = [env_hosts]
+        ports = os.getenv(ES_PORT)
+        client = elasticsearch.Elasticsearch(host, port=ports)
+
+        return client
+    
+
+    @staticmethod
+    def set_datum(datum, index_name):
+        try:
+            record = {
+                '_id': uuid.uuid4(),
+                '_index': index_name,
+                '_source': datum,
+                '_type': 'doc'
+            }
+            return record
+        except Exception as e:
+            print(f'Error in setting the data: {datum}')
+
+
+    
+    @staticmethod
+    def set_data(data, index_name):
+        for data_source in data:
+            datum = Utilities.set_datum(data_source, index_name)
+
+            if datum:
+                yield datum

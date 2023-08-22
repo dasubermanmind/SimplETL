@@ -7,6 +7,7 @@ from typing import Any, Dict, Tuple, Iterable
 import pandas as pd
 from sqlalchemy import create_engine
 import uuid
+from es.Elastic import ElasticSearchWrapper
 from settings.general import ID, MAIN_DATA
 from utilities.Utilities import Utilities
 
@@ -24,7 +25,7 @@ class Optimus:
     def __init__(self, project_name, environment, endpoint, index_name):
         self.project_name = project_name
         self.environment = environment
-        self.es_client = Utilities.get_es_client()
+        self.es_client = ElasticSearchWrapper()
         self.endpoint = endpoint
         self.index_name = index_name
 

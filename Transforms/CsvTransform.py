@@ -21,7 +21,7 @@ class CsvTransform(Optimus):
             all dependancies & any misc tasks we need to do before
             the pipeline begins
 
-            Returns datafram
+            Returns dataframe
         """
         try:
             df: pd.DataFrame = data
