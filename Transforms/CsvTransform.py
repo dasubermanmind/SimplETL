@@ -1,4 +1,4 @@
-from typing import Any, List, Optional
+from typing import Any, List, Optional, Dict, Tuple
 import pandas as pd
 from rich.console import Console
 
@@ -8,16 +8,14 @@ from settings.general import DATA
 console = Console()
 
 class CsvTransform(Optimus):
-   
 
     def __init__(self, project_name, env):        
         super().__init__(project_name, env)
         self.project_name = project_name
         self.environment = env
-        print('INSIDE CSV TRANSFORM')
 
 
-    def extract(self, data: ...) -> ...:
+    def extract(self, data: Any) -> Tuple[int,List[Any]]:
         """
             The main entry point of the ETL. Within this phase we first setup
             all dependancies & any misc tasks we need to do before
@@ -28,50 +26,43 @@ class CsvTransform(Optimus):
         try:
             df: pd.DataFrame = data
             df.fillna("", inplace=True)
-            return df.to_dict(orient="records")
+            df = df.to_dict(orient="records")
+            output_len = len(df)
+            return output_len, df
         except StopIteration:
             return []
-
-
-    def normalize(self, data: Any)-> ...:
-        print('Inside normalize')
-        return data
         
     
-    def execute(self, parameters) -> None:
+    def execute(self, parameters: Dict[str, Any]) -> None:
         """
             This is the execution loop for the extraction
-            :param data is a Dataframe that represents the data that is to be 
-            ingested. It will go through several layers before persisting
-            First we ingest the CSV and create a dataframe based on that
-            We then do data cleaning within the transform layer and do checks along the way
-            Finally, we can now persist to a POSTGRES DB in which everything is parsed out 
-            dyamincally 
+            :param parameters
 
             Return None
         """
-        print("inside execute")
         data = parameters[DATA]
         while True:
             try:
                 # extract
-                extraction_data = self.extract(data)
+                length, extraction_data = self.extract(data)
                 if extraction_data is None:
                     print(f'Failed: Extraction Data-->{extraction_data}')
                     break
                 
                 print(f'Extraction Data-->{extraction_data}')
                 # transform
-                transfom_data, _ = self.transform(extraction_data)
+                transfom_data = self.transform(extraction_data)
                 if transfom_data is None:
                     print(f'Failed: Extraction Data-->{transfom_data}')
                     break
                 
                 print(f'Transofrmed Data-->{transfom_data}')
                 # load
-                tx = self.load(transfom_data)
+                stats = self.load(transfom_data)
+                success = stats['success']
+                fail = stats['fail']
 
-                if tx is None:
+                if success + fail == length or success == length or fail == length:
                     break
             except StopIteration:
                 break

@@ -21,11 +21,13 @@ from utilities.Utilities import Utilities
 
 
 class Optimus:    
-    def __init__(self, project_name, environment):
+    def __init__(self, project_name, environment, endpoint, index_name):
         self.project_name = project_name
         self.environment = environment
+        self.es_client = Utilities.get_es_client()
+        self.endpoint = endpoint
+        self.index_name = index_name
 
-    # These are part of the contract. These must be implemented for each transformer
     @abc.abstractmethod
     def normalize(self , data: Any):
        raise NotImplementedError
@@ -35,7 +37,7 @@ class Optimus:
         raise NotImplementedError
 
     @abc.abstractmethod
-    def extract(self):
+    def extract(self, data: Any):
         raise NotImplementedError
 
     def transform(self, data: Iterable[Any]) -> ...:
@@ -53,7 +55,7 @@ class Optimus:
 
         for datum in data:
             try:
-                # TODO: Update and split apart base class from impl class
+                
                 normalized_data = Utilities.normalize(datum)
             except Exception as e:
                 print(f'Error Normalizing the data->{e}')
@@ -64,14 +66,40 @@ class Optimus:
                 lake_data.append(normalized_data)
         return lake_data
 
-    
-    
-    def load(self, data, name) -> None:
+
+    def load(self, data) -> None:
         """
             :param data Dictionary
 
             Returns None
         """
-        pass
+        data_to_index = {}
+        valid_success: int = 0
+        valid_failure: int = 0
+
+        def indexer(endpoint: str, success: int, fail: int):
+            success, fail = 0,0
+            endpoint_stats = data_to_index.get(endpoint, {
+                'success': 0,
+                'fail': 0
+            })
+
+            endpoint_stats['success'] = success
+            endpoint_stats['fail'] = fail
+            data_to_index[endpoint] = endpoint_stats
+
+        
+        try:
+            # create the index
+            valid_success, valid_failure = self.es_client.load(data, index_name=self.index_name)
+
+        except Exception as e:
+            print('Failed to load')
+
+        finally:
+            indexer(self.endpoint,valid_success,valid_failure )
+        
+        return indexer
+
 
 

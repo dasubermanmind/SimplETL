@@ -16,14 +16,10 @@ This library allows you to spin up an ETL process without you having to think to
 more important things like analyzing your data or fortnite 
 
 
-## Where we load things?
-By default we setup a Postgres docker container and transform targetting this database
-
-
 ## Installation
 ## Windows Virtual Env
 `python -m venv env`
-`source venv/Scripts/activate`
+`source venv/lib/activate`
 
 But will look something like this
 
@@ -31,19 +27,11 @@ But will look something like this
 pip install simpletl
 ```
 
-## Formats that work ROADMAP
+## Transformer Catalog
 CSV - [X] 
-
-[] - JSON -- In Progress Now. 
-[] - XML (eww)
+[] - JSON -- 
 [] - Excel -- This will be interesting
 
-
-Load layer - [] Default is going to be Postgres Connect to DB[X] 
-
-Transform Layer - [] WIP. Need to figure out what transform I will always perform
-
-Abstract Class - [] This one and only!
 
 ## Integrations with SIMPETL
 

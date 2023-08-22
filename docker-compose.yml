@@ -1,19 +1,26 @@
-version: '3.8'
+version: "3.0"
 services:
-  db:
-    image: postgres:latest
-    container_name: 'my-pos-post'
-    restart: always
-    env_file:
-      - .env
+  elasticsearch:
+    container_name: tyr
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.11.0
+    environment:
+      - xpack.security.enabled=false
+      - "discovery.type=single-node"
+    networks:
+      - es-net
     ports:
-      - '5432:5432'
-    volumes: 
-      - db:/var/lib/postgresql/data
-volumes:
-  db:
-    driver: local
-
+      - 9200:9200
+  kibana:
+    container_name: fenrir
+    image: docker.elastic.co/kibana/kibana:7.11.0
+    environment:
+      - ELASTICSEARCH_HOSTS=http://tyr:9200
+    networks:
+      - es-net
+    depends_on:
+      - elasticsearch
+    ports:
+      - 5601:5601
 networks:
-  my-pos-post:
+  es-net:
     driver: bridge

@@ -7,3 +7,4 @@ python-dotenv
 SQLAlchemy
 flake8
 autopep8
+elasticsearch
