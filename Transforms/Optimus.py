@@ -66,6 +66,12 @@ class Optimus:
             else:
                 lake_data.append(normalized_data)
         return lake_data
+    
+
+    def check_index_name(self,index_name):
+        index = self.es_client.indicies.exists(index_name)
+        if not index:
+            self.es_client.indices.create(index=index_name) # optionally I can add a mapping 
 
 
     def load(self, data) -> None:
@@ -92,7 +98,8 @@ class Optimus:
         
         try:
             # create the index
-            valid_success, valid_failure = self.es_client.load(data, index_name=self.index_name)
+            index_name = self.check_index_name(self.index_name)
+            valid_success, valid_failure = self.es_client.load(data, index_name=index_name)
 
         except Exception as e:
             print('Failed to load')
