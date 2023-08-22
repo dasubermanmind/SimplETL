@@ -145,7 +145,7 @@ class Utilities:
 
     @staticmethod
     def get_elastic_client():
-        env_hosts = os.getenv(ES_HOST_KEY)
+        env_hosts = os.getenv(ES_HOST)
         host: List[str] = [env_hosts]
         ports = os.getenv(ES_PORT)
         client = elasticsearch.Elasticsearch(host, port=ports)

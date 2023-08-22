@@ -1,12 +1,7 @@
 import abc
 from abc import abstractclassmethod
-from collections import defaultdict
-import logging
-from typing import Any, Dict, Tuple, Iterable
+from typing import Any, Iterable
 
-import pandas as pd
-from sqlalchemy import create_engine
-import uuid
 from es.Elastic import ElasticSearchWrapper
 from settings.general import ID, MAIN_DATA
 from utilities.Utilities import Utilities

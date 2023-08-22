@@ -1,11 +1,9 @@
-from typing import Any, List, Optional, Dict, Tuple
+from typing import Any, List, Dict, Tuple
 import pandas as pd
-from rich.console import Console
 
 from Transforms.Optimus import Optimus
 from settings.general import DATA
 
-console = Console()
 
 class CsvTransform(Optimus):
 
