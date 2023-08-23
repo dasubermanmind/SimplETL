@@ -8,3 +8,4 @@ SQLAlchemy
 flake8
 autopep8
 elasticsearch
+beautifulsoup4

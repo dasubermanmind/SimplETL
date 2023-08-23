@@ -19,7 +19,7 @@ more important things like analyzing your data or fortnite
 ## Installation
 ## Virtual Env
 `python -m venv env`
-`source venv/lib/activate`
+`source venv/bin/activate`
 
 But will look something like this
 
@@ -29,8 +29,8 @@ pip install simpletl
 
 ## Transformer Catalog
 CSV - [X] 
-[] - JSON -- 
-[] - Excel -- This will be interesting
+[] - JSON
+[] - Excel
 
 
 ## Integrations with SIMPETL
