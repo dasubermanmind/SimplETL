@@ -41,11 +41,9 @@ CSV - [X]
 
 1. UI. One day Ill get to a React Frontend Dashboard. Just not today...
 
-1. Using Multiple databases (endpoints)
+1. Web Scraping Module to ingest data from the web. [X]
 
-1. Web Scraping Module to ingest data from the web. 
-
-1. Ip Rotation Service
+1. Ip Rotation Service [NEXT]
 
 ## Contributing
 Disclaimer: I am new to OSS so if you see something that I can improve please don't hesitate to reach out! Also, dont be an ass there's a difference between being helpful and giving good critical advice vs being a rude jackass. Shouldn't be hard to be nice. 
