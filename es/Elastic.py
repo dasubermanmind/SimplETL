@@ -15,7 +15,8 @@ class ElasticSearchWrapper:
         valid_success: int = 0
         valid_fail: int = 0
         
-        bulk_data = Utilities.set_data(index_name, data)
+        bulk_data = Utilities.set_data(data, index_name)
+
 
         for success, info in streaming_bulk(self.es_client, bulk_data,
                                             raise_on_error=False):

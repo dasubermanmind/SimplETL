@@ -32,7 +32,7 @@ def intro():
     console.print(table)
 
 @app.command()
-def example(data_file_path: str) -> None:
+def example(endpoint: str, index_name: str) -> None:
     """
         The main execution for handling all the different types of file formats.
 
@@ -45,10 +45,10 @@ def example(data_file_path: str) -> None:
     table = Table('What type of data set are you wanting to ingest?')
 
     typer.echo('Please make sure your zip file is in the data dir')
-    Utilities.preprocess(data_file_path)
+    # Utilities.preprocess(data_file_path)
     # Data has been pre-processed
     # Create the ETL Object
-    ingest = CsvTransform.CsvTransform(maryland, 'dev')
+    ingest = CsvTransform.CsvTransform(maryland, 'dev', endpoint, index_name)
     # Execute
     parameters = {
         DATA: 'data/m.csv',

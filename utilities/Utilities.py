@@ -145,10 +145,10 @@ class Utilities:
 
     @staticmethod
     def get_elastic_client():
-        env_hosts = os.getenv(ES_HOST)
+        env_hosts = 'http://localhost:9200'
         host: List[str] = [env_hosts]
-        ports = os.getenv(ES_PORT)
-        client = elasticsearch.Elasticsearch(host, port=ports)
+        ports = 9200
+        client = elasticsearch.Elasticsearch(host)
 
         return client
     
@@ -164,7 +164,7 @@ class Utilities:
             }
             return record
         except Exception as e:
-            print(f'Error in setting the data: {datum}')
+            print(f'Error in setting the data: {e}')
 
 
     

@@ -103,9 +103,12 @@ class Scraper:
 
         # Save locally
         with open(self.file_name, "w") as StreamWriter:
-            StreamWriter.write(self.output)
-            StreamWriter.write('\n')
-            StreamWriter.close()
+            for datum in self.output:
+                StreamWriter.write(datum)
+                StreamWriter.write('\n')
+                StreamWriter.write(self.output[datum])
+                StreamWriter.write('\n')
+                StreamWriter.close()
 
 
     def get_all_data(self):

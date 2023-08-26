@@ -64,12 +64,12 @@ class Optimus:
     
 
     def check_index_name(self,index_name):
-        index = self.es_client.indicies.exists(index_name)
+        index = self.es_client.es_client.indices.exists(index=index_name)
         if not index:
-            self.es_client.indices.create(index=index_name) # optionally I can add a mapping 
+            self.es_client.es_client.indices.create(index=index_name) # optionally I can add a mapping 
 
 
-    def load(self, data) -> None:
+    def load(self, data):
         """
             :param data Dictionary
 
@@ -80,7 +80,6 @@ class Optimus:
         valid_failure: int = 0
 
         def indexer(endpoint: str, success: int, fail: int):
-            success, fail = 0,0
             endpoint_stats = data_to_index.get(endpoint, {
                 'success': 0,
                 'fail': 0
@@ -90,19 +89,17 @@ class Optimus:
             endpoint_stats['fail'] = fail
             data_to_index[endpoint] = endpoint_stats
 
-        
         try:
             # create the index
-            index_name = self.check_index_name(self.index_name)
-            valid_success, valid_failure = self.es_client.load(data, index_name=index_name)
+            self.check_index_name(self.index_name)
+            valid_success, valid_failure = self.es_client.load(data, index_name=self.index_name)
 
         except Exception as e:
-            print('Failed to load')
+            print(f'Failed to load: {e}')
 
         finally:
             indexer(self.endpoint,valid_success,valid_failure )
-        
-        return indexer
+        return data_to_index
 
 
 

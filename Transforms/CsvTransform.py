@@ -7,10 +7,12 @@ from settings.general import DATA
 
 class CsvTransform(Optimus):
 
-    def __init__(self, project_name, env):        
-        super().__init__(project_name, env)
+    def __init__(self, project_name, env, endpoint, index_name):        
+        super().__init__(project_name, env, endpoint, index_name )
         self.project_name = project_name
         self.environment = env
+        self.endpoint = endpoint 
+        self.index_name = index_name
 
 
     def extract(self, data: Any) -> Tuple[int,List[Any]]:
@@ -22,13 +24,13 @@ class CsvTransform(Optimus):
             Returns dataframe
         """
         try:
-            df: pd.DataFrame = data
-            df.fillna("", inplace=True)
-            df = df.to_dict(orient="records")
-            output_len = len(df)
-            return output_len, df
+            reader = pd.read_csv(data, chunksize=1000)
+            df = pd.concat(reader)
+            results = df.to_dict(orient="records")
+            output_len = len(results)
+            return output_len, results
         except StopIteration:
-            return []
+            return 0, []
         
     
     def execute(self, parameters: Dict[str, Any]) -> None:
@@ -42,25 +44,24 @@ class CsvTransform(Optimus):
         while True:
             try:
                 # extract
-                length, extraction_data = self.extract(data)
+                ll, extraction_data = self.extract(data)
                 if extraction_data is None:
                     print(f'Failed: Extraction Data-->{extraction_data}')
                     break
                 
-                print(f'Extraction Data-->{extraction_data}')
                 # transform
                 transfom_data = self.transform(extraction_data)
                 if transfom_data is None:
                     print(f'Failed: Extraction Data-->{transfom_data}')
                     break
                 
-                print(f'Transofrmed Data-->{transfom_data}')
                 # load
                 stats = self.load(transfom_data)
-                success = stats['success']
-                fail = stats['fail']
+                success = stats[self.endpoint]['success']
+                fail = stats[self.endpoint]['fail']
 
-                if success + fail == length or success == length or fail == length:
+
+                if success + fail == ll or success == ll or fail == ll:
                     break
             except StopIteration:
                 break
