@@ -32,45 +32,74 @@ class Scraper:
 
         res = soup.find(id=self.id)
 
-        elements = res.find_all(self.div, class_=self.card_content)
+        _contents = res.find_all(self.div, class_=self.card_content)
 
-        elements2 = res.find_all(self.div, class_=self.section)
-        elements3 = res.find_all(self.div, class_=self.card_content)
-        elements4 = res.find_all(self.div, class_=self.title)
+        _section = res.find_all(self.div, class_=self.section)
 
-        for elems in elements:
-            title_element = elems.find(self.div, class_=self._class)
-            h3_element = elems.find(self.h3, class_=self._class)
-            p_element = elems.find(self.p, class_=self._class)
+        _card_content = res.find_all(self.div, class_=self.card_content)
+
+        _title = res.find_all(self.div, class_=self.title)
+
+
+        if _contents:
+            for elems in _contents:
+                if self.title != '':
+                    title_element = elems.find(self.title, class_=self._class)
+                
+                if self.h3 != '':
+                    h3_element = elems.find(self.h3, class_=self._class)
+                
+                if self.p != '':
+                    p_element = elems.find(self.p, class_=self._class)
+                
             self.output = {
-                f'{elems}': zip(dict(title_element, h3_element, p_element))
-            }
+                    f'{elems}': zip(dict(title_element, h3_element, p_element))
+                }
 
-
-        for elems in elements2:
-            title_element = elems.find(self.div, class_=self._class)
-            h3_element = elems.find(self.h3, class_=self._class)
-            p_element = elems.find(self.p, class_=self._class)
+        if _section:
+            for elems in _section:
+               if self.title != '':
+                    title_element = elems.find(self.title, class_=self._class)
+                
+               if self.h3 != '':
+                    h3_element = elems.find(self.h3, class_=self._class)
+                
+               if self.p != '':
+                    p_element = elems.find(self.p, class_=self._class)
+                
             self.output = {
-                f'{elems}': zip(dict(title_element, h3_element, p_element))
-            }
-            
-        for elems in elements3:
-            title_element = elems.find(self.div, class_=self._class)
-            h3_element = elems.find(self.h3, class_=self._class)
-            p_element = elems.find(self.p, class_=self._class)
+                    f'{elems}': zip(dict(title_element, h3_element, p_element))
+                }
+                
+        if _card_content:
+            for elems in _card_content:
+                if self.title != '':
+                    title_element = elems.find(self.title, class_=self._class)
+                
+                if self.h3 != '':
+                    h3_element = elems.find(self.h3, class_=self._class)
+                
+                if self.p != '':
+                    p_element = elems.find(self.p, class_=self._class)
+                
             self.output = {
-                f'{elems}': zip(dict(title_element, h3_element, p_element))
-            }
-            
-
-        for elems in elements4:
-            title_element = elems.find(self.div, class_=self._class)
-            h3_element = elems.find(self.h3, class_=self._class)
-            p_element = elems.find(self.p, class_=self._class)
+                    f'{elems}': zip(dict(title_element, h3_element, p_element))
+                }
+                
+        if _title:
+            for elems in _title:
+               if self.title != '':
+                    title_element = elems.find(self.title, class_=self._class)
+                
+               if self.h3 != '':
+                    h3_element = elems.find(self.h3, class_=self._class)
+                
+               if self.p != '':
+                    p_element = elems.find(self.p, class_=self._class)
+                
             self.output = {
-                f'{elems}': zip(dict(title_element, h3_element, p_element))
-            }
+                    f'{elems}': zip(dict(title_element, h3_element, p_element))
+                }
 
         # Save locally
         with open(self.file_name, "w") as StreamWriter:
