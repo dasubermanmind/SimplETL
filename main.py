@@ -31,6 +31,12 @@ def intro():
         'In order to start the ETL process first identify the data source. Please visit the readme for kaggle approved datasets')
     console.print(table)
 
+
+# TODO Implement this next. 
+@app.command()
+def scraper():
+    pass
+
 @app.command()
 def example(endpoint: str, index_name: str) -> None:
     """
@@ -51,7 +57,7 @@ def example(endpoint: str, index_name: str) -> None:
     ingest = CsvTransform.CsvTransform(maryland, 'dev', endpoint, index_name)
     # Execute
     parameters = {
-        DATA: 'data/m.csv',
+        DATA: 'data/maryland.csv',
         FILE_NAME : maryland,
     }
     ingest.execute(parameters)
