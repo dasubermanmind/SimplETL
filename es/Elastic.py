@@ -6,10 +6,17 @@ from utilities.Utilities import Utilities
 
 
 class ElasticSearchWrapper:
-    def __init__(self, host='localhost', port=9200):
+    def __init__(self, host='localhost', port=9200, index=''):
         self.host = host
         self.port = port
         self.es_client = Utilities.get_elastic_client()
+        self.index = index
+
+    def get_all(self):
+        query = {
+            'match_all' : {}
+        }
+        return self.es_client.search(index=self.index, body=query, doc_type='_doc')
 
     def load(self, data, index_name):
         valid_success: int = 0

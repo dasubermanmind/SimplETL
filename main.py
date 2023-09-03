@@ -6,9 +6,13 @@ from rich import print
 from rich.console import Console
 from rich.table import Table
 from Transforms import CsvTransform
+from es.Elastic import ElasticSearchWrapper
 
 from settings.general import COVID_DIR, LOCAL_ENV, PROJECT_NAME, COVID_NAME, maryland, DATA, FILE_NAME
 from utilities.Utilities import Utilities
+import spacey
+import en_core_web_sm
+
 
 
 # Consts and appwide declarations
@@ -54,13 +58,29 @@ def example(endpoint: str, index_name: str) -> None:
     # Utilities.preprocess(data_file_path)
     # Data has been pre-processed
     # Create the ETL Object
+    es = ElasticSearchWrapper(index=index_name)
     ingest = CsvTransform.CsvTransform(maryland, 'dev', endpoint, index_name)
     # Execute
     parameters = {
         DATA: 'data/maryland.csv',
         FILE_NAME : maryland,
     }
+    
     ingest.execute(parameters)
+
+    results = es.get_all()
+
+    nlp = spacey.load("en_core_web_sm")
+    
+    for doc in results['hits']['hits']:
+        print(doc)
+        d = nlp.load(doc)
+        print([(w.text, w.pos_) for w in d])
+
+    
+
+
+
 
 if __name__ == '__main__':
     app()
